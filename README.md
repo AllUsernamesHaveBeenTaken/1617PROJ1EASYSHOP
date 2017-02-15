@@ -1,1 +1,1 @@
-# EasyShop-Client
+# EasyShop
