@@ -1,9 +1,9 @@
-#Easyshop
+# Easyshop
 
 This reposetory is a schoolproject based on ReactJS
 
 
-##Developers
+## Developers
 
 Seppe Snoeck
 
