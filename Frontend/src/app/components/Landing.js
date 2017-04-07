@@ -10,14 +10,17 @@ export class Landing extends React.Component {
     render() {
         return (
             <div className="bgImg">
+                <div className="bgCard">
                 <div className="cardLanding">
                     <h1>Easyshop</h1>
                     <a href="#" >
                         <p>Meld uw winkel aan</p>
                     </a>
+                    <p className="icon"></p>
                     <a href="#" >
                         <p>Start met winkelen</p>
                     </a>
+                </div>
                 </div>
             </div>
         )
