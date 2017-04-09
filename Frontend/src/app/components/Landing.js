@@ -9,20 +9,20 @@ import React from "react";
 export class Landing extends React.Component {
     render() {
         return (
-            <div className="bgImg">
-                <div className="bgCard">
+            <section className="bgImg">
+              
                 <div className="cardLanding">
-                    <h1>Easyshop</h1>
-                    <a href="#" >
-                        <p>Meld uw winkel aan</p>
-                    </a>
-                    <p className="icon"></p>
-                    <a href="#" >
-                        <p>Start met winkelen</p>
-                    </a>
+                    <div>
+                        <div className="card-container">
+                             <div className="title-container">
+                                 <h1>Easyshop</h1>
+                             </div>
+                        </div>
+                    </div>
+                   
                 </div>
-                </div>
-            </div>
+
+            </section>
         )
     }
 }
