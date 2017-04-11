@@ -5,17 +5,20 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 import { Header } from "./Header"
-import { Banner } from "./Banner"
+import { Filter } from "./Filter"
+import { Winkel } from "./WinkelCard"
 
 
-export class Home extends React.Component {
+export class Winkels extends React.Component {
     render() {
         return (
             <div>
                 <Header/>
-                <Banner/>
-                <Link to="winkels" className="winkelsIcon">Winkels icon</Link>
+                <Filter/>
+                <Winkel/>
             </div>
         )
     }
-}
+}/**
+ * Created by seppesnoeck on 11/04/17.
+ */

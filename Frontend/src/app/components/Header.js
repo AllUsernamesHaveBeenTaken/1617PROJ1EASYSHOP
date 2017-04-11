@@ -2,20 +2,18 @@
  * Created by seppesnoeck on 1/03/17.
  */
 import React from "react";
+import {Link} from 'react-router-dom';
+
 
 export const Header = (props) => {
     return(
-      <nav className="navbar navbar-default">
-          <div className="container">
-              <div className="navbar-header">
-                  <ul className="nav navbar-nav">
-                      <li><a href="#">Home</a></li>
-                      <li><a href="#">About</a></li>
-                      <li><a href="#">Shops</a></li>
-                      <li><a href="#">Profile</a></li>
-                  </ul>
-              </div>
-          </div>
-      </nav>
+      <section>
+          <Link to="/">Easyshop</Link>
+          <Link to="/">Home</Link>
+          <Link to="/winkels">Winkels</Link>
+          <Link to="/Boodschappen">Boodschappen</Link>
+          <Link to="/Profiel">Profiel</Link>
+          <Link to="/Winkelmandje">Winkelmandje</Link>
+      </section>
     );
 }
