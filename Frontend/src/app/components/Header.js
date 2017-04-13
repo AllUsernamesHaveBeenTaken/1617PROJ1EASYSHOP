@@ -3,43 +3,52 @@
  */
 import React from "react";
 import {Link} from 'react-router-dom';
-import styled from 'styled-components';
+import { css } from 'glamor'
 
-const StyledSection = styled.section`
-    border-bottom-style:solid;
+let StyledSection = css({
+  
+})
 
-`;
-const StyledUl = styled.ul`
-  float:left;
-  width: 70%;
-  text-align:right;
-`;
-const StyledLink = styled(Link)`
-  margin-left: 5%;
-  color: #000;
-  text-decoration:none;
+   
 
-`;
-const StyledH1 = styled.h1`
-  float:left;
-  width: 30%;
-`;
+
+let StyledUl = css({
+  float:'left',
+  width: '70%',
+  textAlign:'right'
+})
+  
+let StyledLink = css({
+  marginLeft: '5%',
+  color: '#000',
+  textDecoration:'none',
+  '@media(max-width: 300px)': {
+    color: 'green'
+  }
+})
+  
+let StyledH1 = css({
+  float:'left',
+  width: '30%'
+})
+  
+
 
 export const Header = (props) => {
     return(
-      <StyledSection >
+      <section >
           <div className="wrapper clearfix">
-            <StyledH1>Easyshop</StyledH1>
-            <StyledUl>
-              <StyledLink to="/">Home</StyledLink>
-              <StyledLink to="/winkels">Winkels</StyledLink>
-              <StyledLink to="/Boodschappen">Boodschappen</StyledLink>
-              <StyledLink to="/Profiel">Profiel</StyledLink>
-              <StyledLink to="/Winkelmandje">Winkelmandje</StyledLink>
-            </StyledUl>
+            <h1 {...StyledH1}>Easyshop</h1>
+            <ul {...StyledUl}>
+              <Link {...StyledLink}  to="/">Home</Link>
+              <Link {...StyledLink} to="/winkels">Winkels</Link>
+              <Link {...StyledLink} to="/Boodschappen">Boodschappen</Link>
+              <Link {...StyledLink} to="/Profiel">Profiel</Link>
+              <Link {...StyledLink} to="/Winkelmandje">Winkelmandje</Link>
+            </ul>
           </div>
           
 
-      </StyledSection>
+      </section>
     );
 }
