@@ -5,7 +5,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import { Header } from "./Header"
 import { Banner } from "./Banner"
-import {MediaQuery} from 'react-container-query';
+import {ContainerQuery} from 'react-container-query';
 
 
 const query = {
@@ -14,22 +14,22 @@ const query = {
     maxWidth: 599
   },
   'width-larger-than-600': {
-    minWidth: 600,
+    maxWidth: 600,
+    minHeight: 400
   }
 };
 
 
 export class Home extends React.Component {
-
+npm
     render() {
         return (
             <div>
-            	<MediaQuery query="width-larger-than-600">
-                	daan
-				</MediaQuery>    
-            	<MediaQuery query="width-larger-than-600">
-                	<Header/>
-				</MediaQuery>    
+                <ContainerQuery query={query}>
+                    {(params) => (
+                        <Header/>
+                    )}
+                </ContainerQuery>
 				
             </div>
         )
