@@ -36,7 +36,7 @@ let StyledH1 = css({
 
 export const Header = (props) => {
     return(
-      <section >
+      <section>
           <div className="wrapper clearfix">
             <h1 {...StyledH1}>Easyshop</h1>
             <ul {...StyledUl}>
@@ -47,8 +47,6 @@ export const Header = (props) => {
               <Link {...StyledLink} to="/Winkelmandje">Winkelmandje</Link>
             </ul>
           </div>
-          
-
       </section>
     );
 }
