@@ -26,7 +26,11 @@ let StyledMenu = css({
   textDecoration:'none',
   color: '#000',
   border: 'solid',
-  borderWidth:'2px'
+  borderWidth:'2px',
+  '@media(min-width: 600px)': {
+    display: 'none'
+  }
+
 
 })
 
@@ -34,15 +38,16 @@ let StyledUl = css({
   float:'left',
   width: '70%',
   textAlign:'right',
-  display:'none'
+  
 })
   
 let StyledLink = css({
   marginLeft: '5%',
   color: '#000',
   textDecoration:'none',
-  '@media(max-width: 300px)': {
-    color: 'green'
+  display: 'none',
+  '@media(min-width: 600px)': {
+    display: 'inline'
   }
 })
   
@@ -61,19 +66,21 @@ export default class Header extends React.Component {
     super();
     this.state = {
       ShowSideNav: false,
+      links: [{linkName:'Home',address:'/'},
+              {linkName:'winkels',address:'/winkels'},
+              {linkName:'Boodschappen',address:'/boodschappen'},
+              {linkName:'Profiel',address:'/profiel'},
+              {linkName:'Winkelmandje',address:'/winkelmandje'},
+
+            ],
     };
   }
-  handleClick(e){
-    
+  handleClick(){
     this.state.ShowSideNav = true
-   
-
-
   }
   closeNav(){
-    console.log(this.props)
+    this.state.ShowSideNav = false
   }
-  
   render() {
     return(
     <div>
@@ -83,16 +90,18 @@ export default class Header extends React.Component {
             <h1 {...StyledH1}>Easyshop</h1>
             <a {...StyledMenu}href="#" onClick={this.handleClick.bind(this)}>MENU</a>
             <ul {...StyledUl}>
-              <Link {...StyledLink}  to="/">Home</Link>
-              <Link {...StyledLink} to="/winkels">Winkels</Link>
-              <Link {...StyledLink} to="/Boodschappen">Boodschappen</Link>
-              <Link {...StyledLink} to="/Profiel">Profiel</Link>
-              <Link {...StyledLink} to="/Winkelmandje">Winkelmandje</Link>
+              {
+                this.state.links.map(function(link) {
+                  return <Link {...StyledLink}  key={link.linkName} to={link.address}>{link.linkName}</Link>
+                  
+                })
+              }
+
             </ul>
           </div>
         </div>
       </section>
-      { this.state.ShowSideNav && <SideNav ShowSideNav={ this.state.ShowSideNav} closeNav = {this.closeNav.bind()}/>}
+      { this.state.ShowSideNav && <SideNav links={this.state.links} closeNav = {this.closeNav.bind(this)}/>}
     </div>
     
     );

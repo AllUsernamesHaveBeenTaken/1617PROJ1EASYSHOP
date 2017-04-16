@@ -28,15 +28,18 @@ let StyledSideLink = css({
 
 export default class SideNav extends React.Component {
   handleClickClose(e){
-    
-    console.log(this.props)
     this.props.closeNav()
   }
   render() {
     return (
        <div {...StyledSideNav}>
           <a href="#" onClick={this.handleClickClose.bind(this)}>&times;</a>
-        dit is een test
+        {
+          this.props.links.map(function(link) {
+            return <Link   key={link.linkName} to={link.address}>{link.linkName}</Link>
+            
+          })
+        }
              
         </div>
     );
