@@ -6,6 +6,10 @@ import {Link} from 'react-router-dom';
 
 import { css } from 'glamor';
 
+let move = css.keyframes({
+ '0%': { width:'0%' },
+  '100%': { width:'100%'}
+})
 let StyledSideNav = css({
    height: '100%',
     width: '100%',
@@ -16,14 +20,31 @@ let StyledSideNav = css({
     backgroundColor: '#fff',
     overflowX: 'hidden',
     textAlign:'center',
-      transition: '0.3s'
+     animation: `${move} 0.3s`,
 })
 let StyledSideLink = css({
   float: 'left',
   width: '100%',
   color:  '#000',
   textDecoration: 'none',
-  transition: '0.3s'
+  marginTop: '15%',
+  fontSize: '20px',
+})
+let CloseContainer = css ({
+  height: '80px',
+  display: 'flex',
+  alignItems: ' center',
+  justifyContent: 'flex-end',
+  width:'95%'
+  
+
+})
+
+let StyledCLose = css({
+  textDecoration: 'none',
+  fontSize: '40px',
+  color:  '#000',
+
 })
 
 export default class SideNav extends React.Component {
@@ -33,10 +54,13 @@ export default class SideNav extends React.Component {
   render() {
     return (
        <div {...StyledSideNav}>
-          <a href="#" onClick={this.handleClickClose.bind(this)}>&times;</a>
+      <div {...CloseContainer}>
+        <a {...StyledCLose} href="#" onClick={this.handleClickClose.bind(this)}>&times;</a>
+      </div>
+          
         {
           this.props.links.map(function(link) {
-            return <Link   key={link.linkName} to={link.address}>{link.linkName}</Link>
+            return <Link {...StyledSideLink}  key={link.linkName} to={link.address}>{link.linkName}</Link>
             
           })
         }

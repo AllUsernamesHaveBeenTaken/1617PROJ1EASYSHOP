@@ -1,5 +1,5 @@
 /**
- * Created by seppesnoeck on 1/03/17.
+ * Created by daanzwaenepoel on 16/04/17.
  */
 import React from "react";
 import {Link} from 'react-router-dom';
@@ -14,22 +14,42 @@ let StyledHeader = css({
 let HeaderContainer = css({
   marginLeft:'5%',
   width:'90%',
-  marginTop: '20px'
+  height: '80px',
+  display: 'flex',
+  alignItems: ' center',
+  '@media(min-width: 961px)': {
+    marginLeft:'0%',
+    width:'100%',
+  }
+
   
 })
+let StyledWapper = css({
+  margin:'0'
 
+  
+})
+let MenuContainer= css({
+  width:'100%',
+  float:'left',
+  textAlign:'right',
+  '@media(min-width: 600px)': {
+    display: 'none',
+    width:'0%',
+
+
+  }
+
+})
    
 let StyledMenu = css({
-  float:'right',
   padding: '5px 10px',
   textAlign:'center',
   textDecoration:'none',
   color: '#000',
   border: 'solid',
   borderWidth:'2px',
-  '@media(min-width: 600px)': {
-    display: 'none'
-  }
+  
 
 
 })
@@ -38,25 +58,27 @@ let StyledUl = css({
   float:'left',
   width: '70%',
   textAlign:'right',
-  
-})
-  
-let StyledLink = css({
-  marginLeft: '5%',
-  color: '#000',
-  textDecoration:'none',
   display: 'none',
   '@media(min-width: 600px)': {
     display: 'inline'
   }
+  
+})
+  
+let StyledLink = css({
+  marginLeft: '10%',
+  color: '#000',
+  textDecoration:'none',
+  
+  
 })
   
 let StyledH1 = css({
   float:'left',
   width: '30%',
-  fontSize: '25px'
+  fontSize: '25px',
+  
 })
-
 
 
 
@@ -85,10 +107,13 @@ export default class Header extends React.Component {
     return(
     <div>
       <section {...StyledHeader}>
-        <div {...HeaderContainer}>
-          <div className="wrapper clearfix">
+        <div className="wrapper clearfix">
+          <div {...HeaderContainer}>   
             <h1 {...StyledH1}>Easyshop</h1>
-            <a {...StyledMenu}href="#" onClick={this.handleClick.bind(this)}>MENU</a>
+            <div {...MenuContainer}>
+               <a {...StyledMenu}href="#" onClick={this.handleClick.bind(this)}>MENU</a>
+            </div>
+           
             <ul {...StyledUl}>
               {
                 this.state.links.map(function(link) {
@@ -100,6 +125,7 @@ export default class Header extends React.Component {
             </ul>
           </div>
         </div>
+      
       </section>
       { this.state.ShowSideNav && <SideNav links={this.state.links} closeNav = {this.closeNav.bind(this)}/>}
     </div>
