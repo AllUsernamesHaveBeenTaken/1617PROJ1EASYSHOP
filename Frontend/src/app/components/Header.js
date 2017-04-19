@@ -4,6 +4,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import { css } from 'glamor';
+
 import SideNav  from "./SideNav"
 
 
@@ -89,7 +90,7 @@ export default class Header extends React.Component {
     this.state = {
       ShowSideNav: false,
       links: [{linkName:'Home',address:'/'},
-              {linkName:'winkels',address:'/winkels'},
+              {linkName:'Winkels',address:'/winkels'},
               {linkName:'Boodschappen',address:'/boodschappen'},
               {linkName:'Profiel',address:'/profiel'},
               {linkName:'Winkelmandje',address:'/winkelmandje'},
