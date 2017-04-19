@@ -3,33 +3,88 @@
  */
 import React from "react";
 import {Link} from 'react-router-dom';
+import { css } from 'glamor';
+
+let FilterContainer = css({
+
+    float: 'left',
+    backgroundColor: '#f1f1f1',
+    padding: '4%'
+
+})
+
+let Styledh1 = css ({
+
+    fontWeight: 500,
+    fontSize: '20px',
+    color: 'black',
+    marginTop: '15px',
+    float: 'left',
+    width: '100%'
+
+})
+
+let StyledInput = css({
+
+    float: 'left',
+    width: '100%',
+    marginTop: '15px',
+    padding: '10px',
+
+})
+
+let StyledCheck = css({
+
+    float: 'left',
+    marginRight: '5px'
+
+
+})
+
+let Button = css({
+    color: '#fff',
+    backgroundColor: '#000',
+    padding: '10px',
+    float: 'left',
+    textDecoration: 'none',
+    marginTop: '15px'
+})
+
+let StyledP = css({
+})
 
 
 export const Filter = (props) => {
     return(
         <section>
-            <p>zoeken</p>
-            <input type="text" placeholder="Winkel naam" name="Winkelnaam" />
-            <input type="text" placeholder="Postcode" name="Postcode" />
-            <p>afstand</p>
-            <input type="checkbox" name="020" />
-            <p>0 km - 20 km</p>
-            <input type="checkbox" name="2050" />
-            <p>20 km - 50 km</p>
-            <input type="checkbox" name="5080" />
-            <p>50 km - 80 km</p>
-            <input type="checkbox" name="80plus" />
-            <p>80 km &#60; ...</p>
-            <p>Categorie</p>
-            <input type="checkbox" name="supermarkt" />
-            <p>Supermarkt</p>
-            <input type="checkbox" name="slager" />
-            <p>Slager</p>
-            <input type="checkbox" name="baker" />
-            <p>Baker</p>
-            <input type="checkbox" name="groeten winkel" />
-            <p>Groeten winkel</p>
-            <input type="submit" value="Zoeken" />
+            <div className="wrapper clearfix">
+                <div {...FilterContainer}>
+                    <h1{...Styledh1}>Zoeken</h1>
+                    <input {...StyledInput} type="text" placeholder="Winkel naam" name="Winkelnaam" />
+                    <input {...StyledInput} type="text" placeholder="Postcode" name="Postcode" />
+
+                    <h1{...Styledh1}>Afstand</h1>
+                    <input {...StyledCheck} type="checkbox" name="020" />
+                    <p{...StyledP}>0 km - 20 km</p>
+                    <input {...StyledCheck}type="checkbox" name="2050" />
+                    <p{...StyledP}>20 km - 50 km</p>
+                    <input {...StyledCheck}type="checkbox" name="5080" />
+                    <p{...StyledP}>50 km - 80 km</p>
+                    <input {...StyledCheck}type="checkbox" name="80plus" />
+                    <p{...StyledP}>80 km &#60; ...</p>
+
+                    <h1{...Styledh1}>Categorie</h1>
+                    <input {...StyledCheck}type="checkbox" name="supermarkt" />
+                    <p>Supermarkt</p>
+                    <input {...StyledCheck}type="checkbox" name="slager" />
+                    <p>Slager</p>
+                    <input{...StyledCheck} type="checkbox" name="baker" />
+                    <p>Baker</p>
+                    <input{...StyledCheck} type="checkbox" name="groeten winkel" />
+                    <p>Groeten winkel</p>
+                    <Link {...Button} to="Winkels" type="submit" value="Zoeken">Zoeken</Link>
+                </div>
+            </div>
         </section>
     );
 }
