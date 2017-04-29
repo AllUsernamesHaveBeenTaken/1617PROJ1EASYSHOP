@@ -7,13 +7,13 @@ import { render } from 'react-dom';
 import {BrowserRouter, Route} from 'react-router-dom';
 
 
-import { Home } from "./components/Home"
-import { Landing } from "./components/Landing"
-import { Winkels } from "./components/Winkels"
-import {  Boodschappen } from "./components/Boodschappen"
-import {  Profiel } from "./components/Profiel"
-import {  WinkelMandje } from "./components/WinkelMandje"
-import {  Producten } from "./components/Producten"
+import { Home } from "./components/home/Home"
+import { Landing } from "./components/landing/Landing"
+import { Winkels } from "./components/winkels/Winkels"
+import {  Boodschappen } from "./components/boodschappen/Boodschappen"
+import {  Profiel } from "./components/profiel/Profiel"
+import {  WinkelMandje } from "./components/winkelmandje/WinkelMandje"
+import {  Producten } from "./components/producten/Producten"
 
 class App extends React.Component { 
     render() {

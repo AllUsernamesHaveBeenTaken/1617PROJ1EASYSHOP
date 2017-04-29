@@ -3,20 +3,18 @@
  */
 import React from "react";
 import {Link} from 'react-router-dom';
-import Header from "./Header"
-import { Banner } from "./Banner"
+
+import Header  from "./nav/Header"
 
 
 
-
-export class Home extends React.Component {
-
+export class Boodschappen extends React.Component {
     render() {
         return (
-        	<div>
-                <Header/>			
+            <div>
+                <Header/>
+                dit is een test Boodschappen
             </div>
         )
     }
 }
- 
