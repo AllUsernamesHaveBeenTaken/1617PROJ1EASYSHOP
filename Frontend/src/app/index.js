@@ -13,8 +13,9 @@ import { Winkels } from "./components/Winkels"
 import {  Boodschappen } from "./components/Boodschappen"
 import {  Profiel } from "./components/Profiel"
 import {  WinkelMandje } from "./components/WinkelMandje"
+import {  Producten } from "./components/Producten"
 
-class App extends React.Component {
+class App extends React.Component { 
     render() {
         return (
             <BrowserRouter>    
@@ -25,6 +26,8 @@ class App extends React.Component {
                     <Route path="/boodschappen" component={Boodschappen} />
                     <Route path="/profiel" component={Profiel} />
                     <Route path="/winkelmandje" component={WinkelMandje} />
+
+                    <Route path="/winkel/:shopName/producten" component={Producten} />
                 </switch>
             </BrowserRouter>
 
