@@ -13,7 +13,7 @@ import { Winkels } from "./components/winkels/Winkels"
 import {  Boodschappen } from "./components/boodschappen/Boodschappen"
 import {  Profiel } from "./components/profiel/Profiel"
 import {  WinkelMandje } from "./components/winkelmandje/WinkelMandje"
-import {  Producten } from "./components/producten/Producten"
+import {  Producten } from "./components/products/Producten"
 
 class App extends React.Component { 
     render() {

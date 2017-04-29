@@ -4,7 +4,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 
-import Header  from "./nav/Header"
+import Header  from "../nav/Header"
 
 
 

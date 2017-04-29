@@ -3,8 +3,8 @@
  */
 import React from "react";
 import {Link} from 'react-router-dom';
-import Header from "./nav/Header"
-import { Banner } from "./home/Banner"
+import Header from "../nav/Header"
+import { Banner } from "./Banner"
 
 
 
