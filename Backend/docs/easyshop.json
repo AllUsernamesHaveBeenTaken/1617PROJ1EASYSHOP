@@ -1,0 +1,5689 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Easyshop",
+    "description": "Easyshop API",
+    "version": "1.0.0"
+  },
+  "host": "api.easy-shop.xyz",
+  "basePath": "/api.php",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "addresses",
+      "description": ""
+    },
+    {
+      "name": "credentials",
+      "description": ""
+    },
+    {
+      "name": "deliveries",
+      "description": ""
+    },
+    {
+      "name": "orders",
+      "description": ""
+    },
+    {
+      "name": "orders_has_products",
+      "description": ""
+    },
+    {
+      "name": "products",
+      "description": ""
+    },
+    {
+      "name": "reviews",
+      "description": ""
+    },
+    {
+      "name": "shops",
+      "description": ""
+    },
+    {
+      "name": "types",
+      "description": ""
+    },
+    {
+      "name": "users",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/addresses": {
+      "get": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of addresses",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "orders",
+                        "addresses_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "address": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "zipcode": {
+                    "type": "string",
+                    "x-dbtype": "char",
+                    "x-nullable": false,
+                    "maxLength": 4
+                  },
+                  "city": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "users_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "orders",
+                        "applicant_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "users",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "address",
+                "zipcode",
+                "city",
+                "users_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "addresses_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "users_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/addresses/{id}": {
+      "get": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "addresses_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "users_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "address",
+                "zipcode",
+                "city",
+                "users_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "addresses_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "users_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "addresses"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "address",
+                "zipcode",
+                "city",
+                "users_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "addresses_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "users_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/credentials": {
+      "get": {
+        "tags": [
+          "credentials"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of credentials",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "shops",
+                        "credentials_id"
+                      ],
+                      [
+                        "users",
+                        "credentials_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 200
+                  },
+                  "accessToken": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "creationDate": {
+                    "type": "string",
+                    "x-dbtype": "datetime",
+                    "x-nullable": false
+                  },
+                  "lastUpdated": {
+                    "type": "string",
+                    "x-dbtype": "datetime",
+                    "x-nullable": false
+                  },
+                  "email": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "credentials"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "password",
+                "accessToken",
+                "creationDate",
+                "lastUpdated",
+                "email"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "credentials_id"
+                    ],
+                    [
+                      "users",
+                      "credentials_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "password": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                },
+                "accessToken": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "lastUpdated": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "email": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/credentials/{id}": {
+      "get": {
+        "tags": [
+          "credentials"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "credentials_id"
+                    ],
+                    [
+                      "users",
+                      "credentials_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "password": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                },
+                "accessToken": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "lastUpdated": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "email": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "credentials"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "password",
+                "accessToken",
+                "creationDate",
+                "lastUpdated",
+                "email"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "credentials_id"
+                    ],
+                    [
+                      "users",
+                      "credentials_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "password": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                },
+                "accessToken": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "lastUpdated": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "email": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "credentials"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "credentials"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "password",
+                "accessToken",
+                "creationDate",
+                "lastUpdated",
+                "email"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "credentials_id"
+                    ],
+                    [
+                      "users",
+                      "credentials_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "password": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                },
+                "accessToken": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "lastUpdated": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "email": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/deliveries": {
+      "get": {
+        "tags": [
+          "deliveries"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of deliveries",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "reviews",
+                        "deliveries_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "deliveryDate": {
+                    "type": "string",
+                    "x-dbtype": "datetime",
+                    "x-nullable": false
+                  },
+                  "deliverer_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "reviews",
+                        "deliveries_deliverer_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "users",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "orders_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "reviews",
+                        "deliveries_orders_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "orders",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "orders_addresses_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "reviews",
+                        "deliveries_orders_addresses_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "orders",
+                      "addresses_id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "applicant_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "reviews",
+                        "deliveries_applicant_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "orders",
+                      "applicant_id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "orders_shops_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "reviews",
+                        "deliveries_orders_shops_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "orders",
+                      "shops_id"
+                    ],
+                    "x-primary-key": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "deliveries"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "deliveryDate",
+                "deliverer_id",
+                "orders_id",
+                "orders_addresses_id",
+                "applicant_id",
+                "orders_shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_deliverer_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/deliveries/{id}": {
+      "get": {
+        "tags": [
+          "deliveries"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_deliverer_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "deliveries"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "deliveryDate",
+                "deliverer_id",
+                "orders_id",
+                "orders_addresses_id",
+                "applicant_id",
+                "orders_shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_deliverer_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "deliveries"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "deliveries"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "deliveryDate",
+                "deliverer_id",
+                "orders_id",
+                "orders_addresses_id",
+                "applicant_id",
+                "orders_shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_deliverer_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "users",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "reviews",
+                      "deliveries_orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "orders",
+                    "shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of orders",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "deliveries",
+                        "orders_id"
+                      ],
+                      [
+                        "orders_has_products",
+                        "orders_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "creationDate": {
+                    "type": "string",
+                    "x-dbtype": "datetime",
+                    "x-nullable": false
+                  },
+                  "completed": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "available": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "expiryDate": {
+                    "type": "string",
+                    "x-dbtype": "datetime",
+                    "x-nullable": false
+                  },
+                  "paid": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "addresses_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "deliveries",
+                        "orders_addresses_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "addresses",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "applicant_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "deliveries",
+                        "applicant_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "addresses",
+                      "users_id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "shops_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "deliveries",
+                        "orders_shops_id"
+                      ]
+                    ],
+                    "x-references": [
+                      "shops",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "creationDate",
+                "completed",
+                "available",
+                "expiryDate",
+                "paid",
+                "addresses_id",
+                "applicant_id",
+                "shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_id"
+                    ],
+                    [
+                      "orders_has_products",
+                      "orders_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "completed": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "expiryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "paid": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "users_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_id"
+                    ],
+                    [
+                      "orders_has_products",
+                      "orders_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "completed": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "expiryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "paid": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "users_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "creationDate",
+                "completed",
+                "available",
+                "expiryDate",
+                "paid",
+                "addresses_id",
+                "applicant_id",
+                "shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_id"
+                    ],
+                    [
+                      "orders_has_products",
+                      "orders_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "completed": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "expiryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "paid": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "users_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "creationDate",
+                "completed",
+                "available",
+                "expiryDate",
+                "paid",
+                "addresses_id",
+                "applicant_id",
+                "shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_id"
+                    ],
+                    [
+                      "orders_has_products",
+                      "orders_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "creationDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "completed": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "expiryDate": {
+                  "type": "string",
+                  "x-dbtype": "datetime",
+                  "x-nullable": false
+                },
+                "paid": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_addresses_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "applicant_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "addresses",
+                    "users_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "deliveries",
+                      "orders_shops_id"
+                    ]
+                  ],
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/orders_has_products": {
+      "get": {
+        "tags": [
+          "orders_has_products"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of orders_has_products",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "orders_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "orders",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "products_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "products",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "orders_has_products"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "orders_id",
+                "products_id",
+                "amount"
+              ],
+              "properties": {
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "products_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "products",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "amount": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/orders_has_products/{id}": {
+      "get": {
+        "tags": [
+          "orders_has_products"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "products_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "products",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "amount": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "orders_has_products"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "orders_id",
+                "products_id",
+                "amount"
+              ],
+              "properties": {
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "products_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "products",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "amount": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "orders_has_products"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "orders_has_products"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "orders_id",
+                "products_id",
+                "amount"
+              ],
+              "properties": {
+                "orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "orders",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "products_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "products",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "amount": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of products",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "orders_has_products",
+                        "products_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "price": {
+                    "type": "number",
+                    "x-dbtype": "double",
+                    "x-nullable": false
+                  },
+                  "available": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "category": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "shops_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "shops",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "description": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 300
+                  },
+                  "price_per_kg": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "price",
+                "available",
+                "category",
+                "shops_id",
+                "description",
+                "price_per_kg"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders_has_products",
+                      "products_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "price": {
+                  "type": "number",
+                  "x-dbtype": "double",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "category": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "description": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 300
+                },
+                "price_per_kg": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders_has_products",
+                      "products_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "price": {
+                  "type": "number",
+                  "x-dbtype": "double",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "category": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "description": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 300
+                },
+                "price_per_kg": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "price",
+                "available",
+                "category",
+                "shops_id",
+                "description",
+                "price_per_kg"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders_has_products",
+                      "products_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "price": {
+                  "type": "number",
+                  "x-dbtype": "double",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "category": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "description": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 300
+                },
+                "price_per_kg": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "price",
+                "available",
+                "category",
+                "shops_id",
+                "description",
+                "price_per_kg"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders_has_products",
+                      "products_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "price": {
+                  "type": "number",
+                  "x-dbtype": "double",
+                  "x-nullable": false
+                },
+                "available": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "category": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "shops",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "description": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 300
+                },
+                "price_per_kg": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of reviews",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-primary-key": true
+                  },
+                  "review": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 500
+                  },
+                  "rating": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "deliveries_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "deliveries",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "deliveries_deliverer_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "deliveries",
+                      "deliverer_id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "deliveries_orders_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "deliveries",
+                      "orders_id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "deliveries_orders_addresses_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "deliveries",
+                      "orders_addresses_id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "deliveries_applicant_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "deliveries",
+                      "applicant_id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "deliveries_orders_shops_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "deliveries",
+                      "orders_shops_id"
+                    ],
+                    "x-primary-key": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "review",
+                "rating",
+                "deliveries_id",
+                "deliveries_deliverer_id",
+                "deliveries_orders_id",
+                "deliveries_orders_addresses_id",
+                "deliveries_applicant_id",
+                "deliveries_orders_shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-primary-key": true
+                },
+                "review": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 500
+                },
+                "rating": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "deliveries_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "deliverer_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-primary-key": true
+                },
+                "review": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 500
+                },
+                "rating": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "deliveries_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "deliverer_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "review",
+                "rating",
+                "deliveries_id",
+                "deliveries_deliverer_id",
+                "deliveries_orders_id",
+                "deliveries_orders_addresses_id",
+                "deliveries_applicant_id",
+                "deliveries_orders_shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-primary-key": true
+                },
+                "review": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 500
+                },
+                "rating": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "deliveries_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "deliverer_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "review",
+                "rating",
+                "deliveries_id",
+                "deliveries_deliverer_id",
+                "deliveries_orders_id",
+                "deliveries_orders_addresses_id",
+                "deliveries_applicant_id",
+                "deliveries_orders_shops_id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-primary-key": true
+                },
+                "review": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 500
+                },
+                "rating": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "deliveries_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_deliverer_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "deliverer_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_addresses_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_addresses_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_applicant_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "applicant_id"
+                  ],
+                  "x-primary-key": true
+                },
+                "deliveries_orders_shops_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "deliveries",
+                    "orders_shops_id"
+                  ],
+                  "x-primary-key": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/shops": {
+      "get": {
+        "tags": [
+          "shops"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of shops",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "orders",
+                        "shops_id"
+                      ],
+                      [
+                        "products",
+                        "shops_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "address": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "zipcode": {
+                    "type": "string",
+                    "x-dbtype": "char",
+                    "x-nullable": false,
+                    "maxLength": 4
+                  },
+                  "city": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "website": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": true,
+                    "maxLength": 45
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "credentials_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "credentials",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "acceptedVendor": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "types_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "types",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "imageName": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": true,
+                    "maxLength": 45
+                  },
+                  "imagePath": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 200
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "shops"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "address",
+                "zipcode",
+                "city",
+                "phoneNumber",
+                "credentials_id",
+                "acceptedVendor",
+                "types_id",
+                "imagePath"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "shops_id"
+                    ],
+                    [
+                      "products",
+                      "shops_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "website": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "acceptedVendor": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "types_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "types",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/shops/{id}": {
+      "get": {
+        "tags": [
+          "shops"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "shops_id"
+                    ],
+                    [
+                      "products",
+                      "shops_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "website": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "acceptedVendor": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "types_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "types",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "shops"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "address",
+                "zipcode",
+                "city",
+                "phoneNumber",
+                "credentials_id",
+                "acceptedVendor",
+                "types_id",
+                "imagePath"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "shops_id"
+                    ],
+                    [
+                      "products",
+                      "shops_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "website": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "acceptedVendor": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "types_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "types",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "shops"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "shops"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "address",
+                "zipcode",
+                "city",
+                "phoneNumber",
+                "credentials_id",
+                "acceptedVendor",
+                "types_id",
+                "imagePath"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "orders",
+                      "shops_id"
+                    ],
+                    [
+                      "products",
+                      "shops_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "address": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "zipcode": {
+                  "type": "string",
+                  "x-dbtype": "char",
+                  "x-nullable": false,
+                  "maxLength": 4
+                },
+                "city": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "website": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "acceptedVendor": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "types_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "types",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/types": {
+      "get": {
+        "tags": [
+          "types"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of types",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "shops",
+                        "types_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "types"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "types_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/types/{id}": {
+      "get": {
+        "tags": [
+          "types"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "types_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "types"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "types_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "types"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "types"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "shops",
+                      "types_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "name": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "List",
+        "parameters": [
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "One or more related entities (comma separated).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Column you want to sort on and the sort direction (comma separated). Example: id,desc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number and page size (comma separated). NB: You cannot use \"page\" without \"order\"! Example: 1,10",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "query",
+            "description": "Transform the records to object format. NB: This can also be done client-side in JavaScript!",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "The table columns you want to retrieve (comma separated). Example: posts.*,categories.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[]",
+            "in": "query",
+            "description": "Filters to be applied. Each filter consists of a column, an operator and a value (comma separated). Example: id,eq,1",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "satisfy",
+            "in": "query",
+            "description": "Should all filters match (default)? Or any?",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "any"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-referenced": [
+                      [
+                        "addresses",
+                        "users_id"
+                      ],
+                      [
+                        "deliveries",
+                        "deliverer_id"
+                      ]
+                    ],
+                    "x-primary-key": true
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 20
+                  },
+                  "firstname": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 45
+                  },
+                  "doesDelivery": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "age": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "activeProfile": {
+                    "type": "integer",
+                    "x-dbtype": "tinyint",
+                    "x-nullable": false
+                  },
+                  "credentials_id": {
+                    "type": "integer",
+                    "x-dbtype": "int",
+                    "x-nullable": false,
+                    "x-references": [
+                      "credentials",
+                      "id"
+                    ],
+                    "x-primary-key": true
+                  },
+                  "imageName": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": true,
+                    "maxLength": 45
+                  },
+                  "imagePath": {
+                    "type": "string",
+                    "x-dbtype": "varchar",
+                    "x-nullable": false,
+                    "maxLength": 200
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create",
+        "parameters": [
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Item to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "phoneNumber",
+                "firstname",
+                "lastname",
+                "doesDelivery",
+                "age",
+                "activeProfile",
+                "credentials_id",
+                "imagePath"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "addresses",
+                      "users_id"
+                    ],
+                    [
+                      "deliveries",
+                      "deliverer_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 20
+                },
+                "firstname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "lastname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "doesDelivery": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "age": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "activeProfile": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identifier of created item.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested item.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "addresses",
+                      "users_id"
+                    ],
+                    [
+                      "deliveries",
+                      "deliverer_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 20
+                },
+                "firstname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "lastname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "doesDelivery": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "age": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "activeProfile": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "phoneNumber",
+                "firstname",
+                "lastname",
+                "doesDelivery",
+                "age",
+                "activeProfile",
+                "credentials_id",
+                "imagePath"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "addresses",
+                      "users_id"
+                    ],
+                    [
+                      "deliveries",
+                      "deliverer_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 20
+                },
+                "firstname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "lastname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "doesDelivery": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "age": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "activeProfile": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Increment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for item.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "in": "body",
+            "description": "Properties of item to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "phoneNumber",
+                "firstname",
+                "lastname",
+                "doesDelivery",
+                "age",
+                "activeProfile",
+                "credentials_id",
+                "imagePath"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-referenced": [
+                    [
+                      "addresses",
+                      "users_id"
+                    ],
+                    [
+                      "deliveries",
+                      "deliverer_id"
+                    ]
+                  ],
+                  "x-primary-key": true
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 20
+                },
+                "firstname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "lastname": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 45
+                },
+                "doesDelivery": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "age": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "activeProfile": {
+                  "type": "integer",
+                  "x-dbtype": "tinyint",
+                  "x-nullable": false
+                },
+                "credentials_id": {
+                  "type": "integer",
+                  "x-dbtype": "int",
+                  "x-nullable": false,
+                  "x-references": [
+                    "credentials",
+                    "id"
+                  ],
+                  "x-primary-key": true
+                },
+                "imageName": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": true,
+                  "maxLength": 45
+                },
+                "imagePath": {
+                  "type": "string",
+                  "x-dbtype": "varchar",
+                  "x-nullable": false,
+                  "maxLength": 200
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of affected rows.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}
