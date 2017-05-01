@@ -6,6 +6,7 @@
  */
 import React from "react";
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export class SignupForm extends React.Component {
 
@@ -14,7 +15,7 @@ export class SignupForm extends React.Component {
         this.state = {
             firstname: '',
             lastname: '',
-            doesDelivery: '',
+            doesDelivery: '0',
             age: '',
             phonenumber: '',
             passwordVerify: '',
@@ -27,12 +28,12 @@ export class SignupForm extends React.Component {
     }
 
     onChange(e){
-        this.setState({ [e.target.name]: e.target.value });
+            this.setState({ [e.target.name]: e.target.value });
     }
 
     onSubmit(e){
         e.preventDefault();
-        console.log(this.state);
+        this.props.userSignupRequest(this.state);
     }
 
     render() {
@@ -74,7 +75,7 @@ export class SignupForm extends React.Component {
                     <input
                         value={this.state.age}
                         onChange={this.onChange}
-                        type="text"
+                        type="date"
                         name="age"
                     />
                 </div>
@@ -113,6 +114,10 @@ export class SignupForm extends React.Component {
                     <button>Signup</button>
                 </div>
             </form>
-        )
+        );
     }
+}
+
+SignupForm.propTypes = {
+    userSignupRequest: PropTypes.func.isRequired
 }
