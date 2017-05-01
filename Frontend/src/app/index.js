@@ -14,6 +14,8 @@ import {  Boodschappen } from "./components/boodschappen/Boodschappen"
 import {  Profiel } from "./components/profiel/Profiel"
 import {  WinkelMandje } from "./components/winkelmandje/WinkelMandje"
 import {  Producten } from "./components/products/Producten"
+import {  Login } from "./components/login/Login"
+import {  Signup } from "./components/login/Signup"
 
 class App extends React.Component { 
     render() {
@@ -22,6 +24,8 @@ class App extends React.Component {
                 <switch>
                     <Route path="/welcome" component={Landing} />
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/signup" component={Signup} />
                     <Route path="/winkels" component={Winkels} />
                     <Route path="/boodschappen" component={Boodschappen} />
                     <Route path="/profiel" component={Profiel} />
