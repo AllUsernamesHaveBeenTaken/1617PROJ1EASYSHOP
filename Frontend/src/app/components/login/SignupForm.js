@@ -7,6 +7,11 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+
+
+import { userSignupRequest } from '../../functions/functions'
+
 
 export class SignupForm extends React.Component {
 
@@ -21,7 +26,7 @@ export class SignupForm extends React.Component {
             passwordVerify: '',
             password: ''
 
-        }
+        };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -33,7 +38,8 @@ export class SignupForm extends React.Component {
 
     onSubmit(e){
         e.preventDefault();
-        this.props.userSignupRequest(this.state);
+        axios.post( 'https://api.easy-shop.xyz/users', { user: this.state });
+        //this.props.userSignupRequest(this.state);
     }
 
     render() {
@@ -118,6 +124,7 @@ export class SignupForm extends React.Component {
     }
 }
 
+/*
 SignupForm.propTypes = {
     userSignupRequest: PropTypes.func.isRequired
-}
+}*/

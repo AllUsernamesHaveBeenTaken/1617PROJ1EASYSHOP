@@ -4,8 +4,9 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import PropTypes from 'prop-types';
+
+import { userSignupRequest } from '../../functions/functions'
 
 import Header  from "../nav/Header";
 import {LoginForm}  from "./LoginForm";
@@ -16,25 +17,20 @@ import {SignupForm}  from "./SignupForm";
 export class Login extends React.Component {
     render() {
 
+        /*const { userSignupRequest } = this.props;
 
-
-        connect((state) => {return {} }, { userSignupRequest });
-
-        function userSignupRequest(userData){
-            return dispatch => {
-                return axios.post('api.easy-shop.xyz/users', userData);
-            }
-        }
+        connect(null, { userSignupRequest });*/
 
         return (
             <div>
                 <Header/>
-                <SignupForm userSignupRequest={userSignupRequest} />
+                {/*<SignupForm {userSignupRequest={userSignupRequest}}/>*/}
+                <SignupForm/>
             </div>
         )
     }
 }
 
-Login.propTypes = {
+/*Login.propTypes = {
     userSignupRequest: PropTypes.func.isRequired
-};
+};*/
