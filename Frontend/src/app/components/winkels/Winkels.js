@@ -14,7 +14,7 @@ export class Winkels extends React.Component {
         return (
             <div>
                 <Header/>
-                <Filter/>
+                <Winkel/>
             </div>
         )
     }

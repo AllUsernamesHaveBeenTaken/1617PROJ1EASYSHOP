@@ -13,7 +13,7 @@ export const Winkel = (props) => {
                 <p>Colruyt Aalst</p>
                 <p>1km</p>
                 <p>adres adres adres ofzo iets</p>
-                <input type="submit" value="Winkel" />
+                <Link to='/winkel/col/producten' >Winkel</Link>
             </Link>
         </section>
     );
