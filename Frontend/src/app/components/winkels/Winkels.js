@@ -7,18 +7,53 @@ import {Link} from 'react-router-dom';
 import Header  from "../nav/Header"
 import { Filter } from "./Filter"
 import { Winkel } from "./WinkelCard"
+import { css } from 'glamor';
 
+let styledFilter = css({
+	float: 'left',
+    width: '100%',
+    '@media(min-width: 550px)': {
+        float: 'left',
+    	width: '25%',
+    	margin: '0% 3%',
+    }
+})
+let styledwinkelcontainer = css({
+	float: 'left',
+    width: '100%',
+    '@media(min-width: 550px)': {
+       float: 'left',
+    	width: '63%',
+    }
 
+})
+let styledDivTop = css({
+	
+	'@media(min-width: 550px)': {
+       marginTop:'25px',
+    }
+})
 export class Winkels extends React.Component {
     render() {
         return (
             <div>
                 <Header/>
-<<<<<<< HEAD
-=======
-                <Filter/>
->>>>>>> eeb44a14dc165c8fba72d06f30e83189cb3e6e33
-                <Winkel/>
+                <section className='wrapper'>
+					<div {...styledDivTop}{...styledFilter}>
+						<Filter />
+	                </div>
+				
+					<div {...styledDivTop} {...styledwinkelcontainer}>
+						<Winkel/>
+						<Winkel/>
+						<Winkel/>
+						<Winkel/>
+						<Winkel/>
+						<Winkel/>
+					</div>
+                </section>
+                
+				
             </div>
         )
     }

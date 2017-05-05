@@ -4,10 +4,12 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import { css } from 'glamor';
+import Dropdown from 'react-dropdown'
 
 let FilterContainer = css({
 
     float: 'left',
+    width: '100%',
     backgroundColor: '#f1f1f1',
     padding: '4%'
 
@@ -49,21 +51,21 @@ let Button = css({
     textDecoration: 'none',
     marginTop: '15px'
 })
-
 let StyledP = css({
 })
+
 
 
 export const Filter = (props) => {
     return(
         <section>
-            <div className="wrapper clearfix">
+            <div className="clearfix">
                 <div {...FilterContainer}>
-                    <h1{...Styledh1}>Zoeken</h1>
+                    <h2{...Styledh1}>Zoeken</h2>
                     <input {...StyledInput} type="text" placeholder="Winkel naam" name="Winkelnaam" />
                     <input {...StyledInput} type="text" placeholder="Postcode" name="Postcode" />
 
-                    <h1{...Styledh1}>Afstand</h1>
+                    <h3{...Styledh1}>Afstand</h3>
                     <input {...StyledCheck} type="checkbox" name="020" />
                     <p{...StyledP}>0 km - 20 km</p>
                     <input {...StyledCheck}type="checkbox" name="2050" />
@@ -73,7 +75,7 @@ export const Filter = (props) => {
                     <input {...StyledCheck}type="checkbox" name="80plus" />
                     <p{...StyledP}>80 km &#60; ...</p>
 
-                    <h1{...Styledh1}>Categorie</h1>
+                    <h4{...Styledh1}>Categorie</h4>
                     <input {...StyledCheck}type="checkbox" name="supermarkt" />
                     <p>Supermarkt</p>
                     <input {...StyledCheck}type="checkbox" name="slager" />
@@ -84,6 +86,7 @@ export const Filter = (props) => {
                     <p>Groeten winkel</p>
                     <Link {...Button} to="Winkels" type="submit" value="Zoeken">Zoeken</Link>
                 </div>
+
             </div>
         </section>
     );

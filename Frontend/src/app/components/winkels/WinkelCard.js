@@ -7,68 +7,125 @@ import { css } from 'glamor';
 
 
 let logo = css({
-    backgroundImage: 'URL("/images/winkels/logo-colruyt.jpg")',
+    backgroundImage: 'URL("/images/winkels/logo-colruyt.jpg") ',
     height: '107px',
     backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
     width: '100%',
-    margin: '5%'
+    backgroundPosition:'center',
+    margin: '5%',
+    '@media(min-width: 660px)': {
+        height:'60px'
+    }
 })
 
 let styledSection = css({
-    borderBottom: 'solid 1px gray',
+    borderBottom: 'solid 1px',
+    borderColor: 'rgba(134, 139, 141, 0.42)',
     float: 'left',
     width: '100%'
 })
 
-let styledInfoDiv = css({
-    width: '60%',
-    float: 'left'
-})
+
 
 let styledlogoDiv = css({
-    width: '30%',
-    float: 'left'
+    width: '35%',
+    float: 'left',
+    '@media(min-width: 660px)': {
+        width:'30%',
+    }
+
 })
 
 let styledLink = css ({
     color: 'black',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    borderBottom: 'solid',
+    borderWidth: '1px',
+    fontSize:'14px',
+    padding: '5px 0px',
+    marginRight: '10%',
+    '@media(min-width: 660px)': {
+        marginRight:'15%'
+  
+    }
+
+
 })
 
 let styledTitle = css ({
-    fontWeight: '300'
+    fontWeight: '300',
+    float:'left'
+})
+let styledAfstand = css({
+    float:'left',
+    marginLeft: '5px'
 })
 
+let styledContainerDiv = css ({
+    float: 'left',
+    width:'57%',
+    marginLeft:'8%',
+    paddingTop:'20px',
+    '@media(min-width: 660px)': {
+        width:'65%',
+         marginLeft:'5%',
+    }
+
+})
+let styledInfoDiv = css({
+    width: '100%',
+    float: 'left',
+    '@media(min-width: 660px)': {
+        width:'55%',
+  
+    }
+})
+let styledLinkDiv = css({
+    width: '100%',
+    float: 'left',
+    marginTop:'10px',
+    '@media(min-width: 660px)': {
+        width:'45%',
+  
+    }
+})
+let styledAddres = css ({
+    float:'left',
+    width: '100%',
+})
+let divMargin = css ({
+    marginBottom:'5px'
+})
+let styledlinkextra = css({
+    border: 'solid',
+    borderWidth:'1px',
+    padding:'5px 10px'
+})
 
 export const Winkel = (props) => {
     return(
         <section>
-<<<<<<< HEAD
-            <Link to="Winkels">
-                <div className="WinkelLogo"/>
-                <p>Colruyt Aalst</p>
-                <p>1km</p>
-                <p>adres adres adres ofzo iets</p>
-                <Link to='/winkel/col/producten' >Winkel</Link>
-            </Link>
-=======
+            
             <div {...styledSection}>
-                <Link {...styledLink} to="Winkels">
-                    <div{...styledlogoDiv}>
-                        <div {...logo} className="WinkelLogo"/>
-                    </div>
-                    <div{...styledInfoDiv}>
-                        <p{...styledTitle}>Colruyt Aalst</p>
-                        <p>1km</p>
-                        <p>adres adres adres ofzo iets</p>
-                    </div>
-                </Link>
-                <div>
-                    <Link to="Winkels" >Meer info</Link>
-                    <Link to="winkel/col/producten" >Winkel</Link>
+               
+                <div{...styledlogoDiv}>
+                    <div {...logo} />
                 </div>
+                <div {...styledContainerDiv}>
+                    <div{...styledInfoDiv}>
+                        <h2{...styledTitle} {...divMargin}>Colruyt Aalst</h2>
+                        <p{...styledAfstand}>1km</p>
+                        <p {...styledAddres} {...divMargin}>adres adres adres ofzo iets</p>
+                    </div>
+ 
+                    <div{...styledLinkDiv}>
+                        <Link {...styledLink} to="/winkel/col" >Meer info</Link>
+                        <Link {...styledLink} {...styledlinkextra}to="/winkell/col/producten" >Winkel</Link>
+                    </div>
+                </div>
+                
             </div>
->>>>>>> eeb44a14dc165c8fba72d06f30e83189cb3e6e33
         </section>
     );
 }

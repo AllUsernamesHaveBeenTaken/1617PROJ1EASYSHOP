@@ -3,7 +3,7 @@
  */
 import React from "react";
 import {Link} from 'react-router-dom';
-
+import {AddCount}  from "./AddCount"
 import { css } from 'glamor';
 
 let StyledImg = css({
@@ -14,7 +14,7 @@ let StyledImg = css({
 	backgroundImage: 'url("/images/productImg@2x.png")',
 	backgroundRepeat: 'no-repeat',
 	backgroundPosition: '50% 50%',
-	backgroundSize: 'cover',
+	backgroundSize: 'contain',
 })
 let StyledRight = css({
 	float: 'left',
@@ -79,11 +79,12 @@ let StyledDrop = css ({
 	    top: '0'    
     
    	},
-   })
+})
 
 export class ProductInfo extends React.Component {
 	
     render() {
+    	
         return (
         	<div {...StyledBorder} className='clearfix'>
         		<div {...StyledImg} ></div>
@@ -94,12 +95,9 @@ export class ProductInfo extends React.Component {
         			<p {...StyledInfo} >€ 4,08/kg</p>
         		</div>
         		<div {...StyledUnderLeft}>
-					<select {...StyledDrop}>
-					  <option value="volvo">Volvo</option>
-					  <option value="saab">Saab</option>
-					  <option value="mercedes">Mercedes</option>
-					  <option value="audi">Audi</option>
-					</select>
+					
+						<AddCount/>
+			
         		</div>
         		<div {...StyledUnderRight}> <button {...StyledButton}>Voeg toe</button> </div>
             </div>
