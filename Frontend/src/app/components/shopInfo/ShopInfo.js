@@ -10,8 +10,6 @@ import {ShopTitle } from "./ShopTitle"
 let StyledPLace = before({
         display: 'inline-block',
         content: 'url("/images/icon/call.svg")',
-        
- 
         verticalAlign: '-50%'
 },
 css({
