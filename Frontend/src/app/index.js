@@ -8,6 +8,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
+import axios from 'axios';
 
 import { Home } from "./components/home/Home"
 import { Landing } from "./components/landing/Landing"
@@ -22,14 +23,24 @@ import {  Login } from "./components/login/Login"
 import {  Signup } from "./components/login/Signup"
 
 
+
+
+
 class App extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        tokenkey: 'daan'
+      };
+    }
+
+    componentWillMount(){         
+             
+    }
     render() {
 
-        const store = createStore(
-            (state = {}) => state,
-            applyMiddleware(thunk)
-        );
-
+        
+        
         return (
 
             <BrowserRouter>    
@@ -41,8 +52,8 @@ class App extends React.Component {
                     <Route path="/profiel" component={Profiel} />
                     <Route path="/winkelmandje" component={WinkelMandje} />
                     
-                    <Route path="/winkel/:shopName" component={ShopInfo} />
-                    <Route path="/winkell/:shopName/producten" component={Producten} />
+                    <Route path="/winkel/info/:shopId" component={ShopInfo} />
+                    <Route path="/winkel/producten/:shopId" component={Producten} />
 
                     <Route exact path="/login" component={Login} />
                         

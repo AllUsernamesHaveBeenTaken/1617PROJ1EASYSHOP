@@ -3,11 +3,13 @@
  */
 import React from "react";
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import { css } from 'glamor';
 
 import Header  from "../nav/Header"
 import { Filter } from "./Filter"
 import { Winkel } from "./WinkelCard"
-import { css } from 'glamor';
+
 
 let styledFilter = css({
 	float: 'left',
@@ -34,7 +36,36 @@ let styledDivTop = css({
     }
 })
 export class Winkels extends React.Component {
+    constructor(props) {
+    super(props);
+    
+    this.state = {
+      jsonReturnedValue: null,
+      shopsFound: false
+    }
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+    componentDidMount() { 
+        axios.get('http://api.easy-shop.xyz/shops' ).then((response) => {
+            this.setState({ jsonReturnedValue: response.data.shops.records})
+            this.setState({ shopsFound: true})
+            
+          
+
+      
+            })
+          .catch(function (error) {
+            console.log(error);
+        });
+
+      
+    }
+
+    
     render() {
+         
+
         return (
             <div>
                 <Header/>
@@ -44,12 +75,18 @@ export class Winkels extends React.Component {
 	                </div>
 				
 					<div {...styledDivTop} {...styledwinkelcontainer}>
-						<Winkel/>
-						<Winkel/>
-						<Winkel/>
-						<Winkel/>
-						<Winkel/>
-						<Winkel/>
+					   {
+                            this.state.shopsFound ?
+                                this.state.jsonReturnedValue.map(function(link) {
+                                    return  <Winkel key={link[0]} logo={link[10]} id={link[0]} address={link[2]}shopName= {link[1]} />
+            
+                                })
+                            :
+                            <p>no shops found</p>
+                            
+                        
+
+                       }
 					</div>
                 </section>
                 

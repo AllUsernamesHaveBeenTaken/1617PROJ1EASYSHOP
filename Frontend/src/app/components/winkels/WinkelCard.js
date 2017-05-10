@@ -7,7 +7,6 @@ import { css } from 'glamor';
 
 
 let logo = css({
-    backgroundImage: 'URL("/images/winkels/logo-colruyt.jpg") ',
     height: '107px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
@@ -104,24 +103,24 @@ let styledlinkextra = css({
 })
 
 export const Winkel = (props) => {
+
     return(
         <section>
             
             <div {...styledSection}>
                
                 <div{...styledlogoDiv}>
-                    <div {...logo} />
+                    <div {...logo} {...css({backgroundImage: 'URL("/images/winkels/'+props.logo+'") '})} />
                 </div>
                 <div {...styledContainerDiv}>
                     <div{...styledInfoDiv}>
-                        <h2{...styledTitle} {...divMargin}>Colruyt Aalst</h2>
-                        <p{...styledAfstand}>1km</p>
-                        <p {...styledAddres} {...divMargin}>adres adres adres ofzo iets</p>
+                        <h2{...styledTitle} {...divMargin}>{props.shopName}</h2>
+                        <p {...styledAddres} {...divMargin}>{props.address}</p>
                     </div>
  
                     <div{...styledLinkDiv}>
-                        <Link {...styledLink} to="/winkel/col" >Meer info</Link>
-                        <Link {...styledLink} {...styledlinkextra}to="/winkell/col/producten" >Winkel</Link>
+                        <Link {...styledLink} to={"/winkel/info/"+props.id} >Meer info</Link>
+                        <Link {...styledLink} {...styledlinkextra}to={"/winkel/producten/"+props.id} >Winkel</Link>
                     </div>
                 </div>
                 

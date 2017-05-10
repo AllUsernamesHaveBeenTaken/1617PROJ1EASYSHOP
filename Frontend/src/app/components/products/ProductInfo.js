@@ -11,7 +11,6 @@ let StyledImg = css({
 	width: '35%',
 	marginLeft: '5%',
 	float: 'left',
-	backgroundImage: 'url("/images/productImg@2x.png")',
 	backgroundRepeat: 'no-repeat',
 	backgroundPosition: '50% 50%',
 	backgroundSize: 'contain',
@@ -87,12 +86,12 @@ export class ProductInfo extends React.Component {
     	
         return (
         	<div {...StyledBorder} className='clearfix'>
-        		<div {...StyledImg} ></div>
+        		<div {...StyledImg} {...css({backgroundImage: 'URL("/images/producten/'+this.props.image+'") '})}></div>
         		<div {...StyledRight} >
-        			<h2 {...StyledTitle}>BARILLA</h2>
-        			<p {...StyledInfo}>Piccolini penne  500 g</p>
-        			<p {...StyledInfo} {...StyledStuk} >€ 2,04/st</p>
-        			<p {...StyledInfo} >€ 4,08/kg</p>
+        			<h2 {...StyledTitle}>{this.props.name}</h2>
+        			<p {...StyledInfo}>{this.props.description}</p>
+        			<p {...StyledInfo} {...StyledStuk} >€ {this.props.price}</p>
+        			<p {...StyledInfo} >€ {this.props.price_per_kg}</p>
         		</div>
         		<div {...StyledUnderLeft}>
 					

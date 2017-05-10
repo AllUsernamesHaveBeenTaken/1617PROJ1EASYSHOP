@@ -5,22 +5,13 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import { Filter } from "./Filter"
 import { css } from 'glamor';
+import axios from 'axios';
 
 import Header  from "../nav/Header"
 
 import {ProductInfo}  from "./ProductInfo"
-let StyledBannercontainer = css({
-	height: '300px',
-	backgroundColor: '#D6D6D6',
-	marginBottom: '50px'
-})
-let StyledBanner = css({
-	height: '280px',
-	backgroundImage: 'url("/images/winkels/banner-colruyt.png")',
-	backgroundRepeat: 'no-repeat',
-	backgroundPosition: '50% 50%',
-	backgroundSize: 'cover',
-})
+import {Banner}  from "../winkels/Banner.js"
+
 let StyledFilter = css ({
 	float:'left',
 	width: '100%',
@@ -58,38 +49,56 @@ let styledInfo = css ({
 })
 
 export class Producten extends React.Component {
+    
+    constructor(props) {
+	    super(props);
+	    
+	    this.state = {
+	      jsonReturnedValue: null,
+	      productFound: false
+	    }
+	    this.componentDidMount = this.componentDidMount.bind(this);
+	  }
+
+	    componentDidMount() {
+	       axios.get('http://api.easy-shop.xyz/api.php/products?filter=shops_id,eq,'+this.props.match.params.shopId ).then((response) => {
+	            this.setState({ jsonReturnedValue: response.data.products.records})
+	            this.setState({ productFound: true})
+	            
+	
+
+	      
+	            })
+	          .catch(function (error) {
+	            console.log(error);
+	        });
+
+	    }
     render() {
+    	
         return (
             <div>
                 <Header/>
-                <div {...StyledBannercontainer}>
-                	<div {...StyledBanner}>
-                		
-                	</div>
-                </div>
+              	<Banner/>
                 <section className='wrapper clearfix'>
                 	<div{...StyledFilter}>
 						<Filter/>
 	                </div>
 	                <div{...styledInfoContainer}>
-	                	<div{...styledInfo}>
-	                		 <ProductInfo/>
-	                	</div>
-	                	<div{...styledInfo}>
-	                		 <ProductInfo/>
-	                	</div>
-	                	<div{...styledInfo}>
-	                		 <ProductInfo/>
-	                	</div>
-	                	<div{...styledInfo}>
-	                		 <ProductInfo/>
-	                	</div>
-	                	<div{...styledInfo}>
-	                		 <ProductInfo/>
-	                	</div>
-	                	<div{...styledInfo}>
-	                		 <ProductInfo/>
-	                	</div>
+	                	{
+                            this.state.productFound ?
+                                this.state.jsonReturnedValue.map(function(link) {
+                                    return <div key={link[0]} {...styledInfo}> <ProductInfo price={link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
+            
+                                })
+                            :
+                            <p>no shops found</p>
+                            
+                        
+
+                       }
+	                	
+	                	
 	                </div>
                 
                 </section>
