@@ -4,6 +4,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import axiosDefaults from 'axios/lib/defaults';
 import { css } from 'glamor';
 
 import Header  from "../nav/Header"
@@ -45,9 +46,12 @@ export class Winkels extends React.Component {
     }
     this.componentDidMount = this.componentDidMount.bind(this);
   }
-
+    
     componentDidMount() { 
-        axios.get('http://api.easy-shop.xyz/shops' ).then((response) => {
+        axiosDefaults.xsrfCookieName=localStorage.getItem('jwtToken');
+        axiosDefaults.xsrfHeaderName = localStorage.getItem('jwtToken');
+
+        axios('http://api.easy-shop.xyz/shops?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
             this.setState({ jsonReturnedValue: response.data.shops.records})
             this.setState({ shopsFound: true})
             

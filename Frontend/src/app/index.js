@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import axios from 'axios';
+// import { AsyncStorage } from 'react-native';
 
 import { Home } from "./components/home/Home"
 import { Landing } from "./components/landing/Landing"
@@ -20,7 +21,6 @@ import {  Producten } from "./components/products/Producten"
 
 import {  ShopInfo } from "./components/shopInfo/ShopInfo"
 import {  Login } from "./components/login/Login"
-import {  Signup } from "./components/login/Signup"
 
 
 
@@ -30,13 +30,28 @@ class App extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        tokenkey: 'daan'
+        
       };
     }
 
-    componentWillMount(){         
-             
-    }
+    // componentWillMount(){         
+    //          axios.post('http://api.easy-shop.xyz/login_token.php', {username:'admin',password:'Azerty123'}).then((response) => {
+    //            // console.log(response.data)
+    //            axios.post('http://api.easy-shop.xyz/api.php', {token:response.data}).then((response) => {
+    //                 // console.log(response)
+    //             })
+    //             .catch(function (error) {
+    //             console.log(error);
+    //             });
+                
+    
+
+          
+    //         })
+    //           .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // }
     render() {
 
         
@@ -57,7 +72,7 @@ class App extends React.Component {
 
                     <Route exact path="/login" component={Login} />
                         
-                    <Route exact path="/signup" component={Signup} />
+                   
                 </switch>
             </BrowserRouter>
 

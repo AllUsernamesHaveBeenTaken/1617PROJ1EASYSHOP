@@ -9,11 +9,16 @@ import Header  from "../nav/Header"
 
 
 export class Profiel extends React.Component {
+     componentDidMount() {
+        AsyncStorage.getItem("token").then((value) => {
+            this.setState({"token": value});
+        }).done();
+    }
     render() {
         return (
             <div>
                 <Header/>
-                dit is een test Profiel
+                <p>{this.state.token}</p>
             </div>
         )
     }
