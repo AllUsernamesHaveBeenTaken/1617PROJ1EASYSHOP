@@ -51,6 +51,9 @@ export default class SideNav extends React.Component {
   handleClickClose(e){
     this.props.closeNav()
   }
+  logout(){
+    this.props.logout()
+  }
   render() {
     return (
        <div {...StyledSideNav}>
@@ -64,6 +67,7 @@ export default class SideNav extends React.Component {
             
           })
         }
+         <a {...StyledSideLink}   onClick={this.logout.bind(this)} href="#">logout</a>
              
         </div>
     );

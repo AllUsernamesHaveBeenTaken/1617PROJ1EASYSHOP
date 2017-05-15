@@ -35,24 +35,7 @@ class App extends React.Component {
        this.getCookie = this.getCookie.bind(this);
     }
 
-    // componentWillMount(){         
-    //          axios.post('http://api.easy-shop.xyz/login_token.php', {username:'admin',password:'Azerty123'}).then((response) => {
-    //            // console.log(response.data)
-    //            axios.post('http://api.easy-shop.xyz/api.php', {token:response.data}).then((response) => {
-    //                 // console.log(response)
-    //             })
-    //             .catch(function (error) {
-    //             console.log(error);
-    //             });
-                
-    
-
-          
-    //         })
-    //           .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }
+ 
     getCookie(name) {
         var value = "; " + document.cookie;
         var parts = value.split("; " + name + "=");
@@ -62,21 +45,22 @@ class App extends React.Component {
         
         
   
-        console.log(this.getCookie('loginFlag'));
-        if (this.getCookie('loginFlag')) {
+      
+        if (this.getCookie('loginFlag')== 'true') {
             return (
             
                 <BrowserRouter>    
                     <switch>
                         <Route path="/welcome" component={Landing} />
-                        <Route exact path="/" component={Home} />
+                        <Route exact path="/" component={Profiel} />
                         <Route path="/winkels" component={Winkels} />
                         <Route path="/boodschappen" component={Boodschappen} />
-                        <Route path="/profiel" component={Profiel} />
+                       
                         <Route path="/winkelmandje" component={WinkelMandje} />
                         
                         <Route path="/winkel/info/:shopId" component={ShopInfo} />
                         <Route path="/winkel/producten/:shopId" component={Producten} />
+
 
                        
                             

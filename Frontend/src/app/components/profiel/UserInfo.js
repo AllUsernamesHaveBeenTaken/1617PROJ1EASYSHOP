@@ -5,23 +5,18 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 import Header  from "../nav/Header"
-import {UserInfo}  from "./UserInfo"
 
 
 
 
-export class Profiel extends React.Component {
+export class UserInfo extends React.Component {
      componentDidMount() {
        
     }
     render() {
         return (
             <div>
-                <Header/>
-
-                <div className="wrapper">
-                    <UserInfo/>
-                </div>
+                test test tes 
             </div>
         )
     }

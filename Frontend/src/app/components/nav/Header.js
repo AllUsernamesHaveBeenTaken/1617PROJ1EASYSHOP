@@ -89,10 +89,9 @@ export default class Header extends React.Component {
     super();
     this.state = {
       ShowSideNav: false,
-      links: [{linkName:'Home',address:'/'},
+      links: [{linkName:'Profiel',address:'/'},
               {linkName:'Winkels',address:'/winkels'},
               {linkName:'Boodschappen',address:'/boodschappen'},
-              {linkName:'Profiel',address:'/profiel'},
               {linkName:'Winkelmandje',address:'/winkelmandje'},
 
             ],
@@ -103,6 +102,15 @@ export default class Header extends React.Component {
   }
   closeNav(){
     this.state.ShowSideNav = false
+  }
+  logout(){
+      console.log('daan');
+      event.preventDefault();
+      localStorage.setItem('jwtToken', '');
+      document.cookie = "XSRF-TOKEN=''; path=/";
+      document.cookie = "user=''; path=/";
+      document.cookie = "loginFlag=false; path=/";
+      window.location.assign('/')
   }
   render() {
     return(
@@ -123,12 +131,14 @@ export default class Header extends React.Component {
                 })
               }
 
+              <a {...StyledLink}   onClick={this.logout.bind(this)} href="#">logout</a>
+
             </ul>
           </div>
         </div>
       
       </section>
-      { this.state.ShowSideNav && <SideNav links={this.state.links} closeNav = {this.closeNav.bind(this)}/>}
+      { this.state.ShowSideNav && <SideNav links={this.state.links} logout={this.logout.bind(this)} closeNav = {this.closeNav.bind(this)}/>}
     </div>
     
     );
