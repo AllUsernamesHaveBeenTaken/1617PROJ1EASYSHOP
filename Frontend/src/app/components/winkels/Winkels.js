@@ -48,10 +48,8 @@ export class Winkels extends React.Component {
   }
     
     componentDidMount() { 
-        axiosDefaults.xsrfCookieName=localStorage.getItem('jwtToken');
-        axiosDefaults.xsrfHeaderName = localStorage.getItem('jwtToken');
-
-        axios('http://api.easy-shop.xyz/shops?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+        axios.defaults.withCredentials = true;
+        axios.get('http://api.easy-shop.xyz/shops?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
             this.setState({ jsonReturnedValue: response.data.shops.records})
             this.setState({ shopsFound: true})
             

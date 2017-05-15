@@ -77,13 +77,18 @@ export class Login extends React.Component {
             var email = this.form.components.email.state.value;
             var pass = this.form.components.password.state.value;
             event.preventDefault();
-
-             axios.post('http://api.easy-shop.xyz/login_token.php', {username: email,password: pass,withCredentials:true})
+             axios.defaults.withCredentials = true;
+             axios.post('https://api.easy-shop.xyz/login_token.php', {username: email,password: pass,withCredentials:true})
              .then((response) => {
                console.log(this);
-               axios.post('http://api.easy-shop.xyz/api.php', {token:response.data,withCredentials:true}).then((response) => {
+               axios.post('https://api.easy-shop.xyz/api.php', {token:response.data,withCredentials:true}).then((response) => {
                     console.log(response)
                     localStorage.setItem('jwtToken', response.data);
+                    document.cookie = "XSRF-TOKEN="+response.data+"; path=/";
+                    document.cookie = "user="+email+"; path=/";
+                    document.cookie = "loginFlag=true; path=/";
+                    location.reload();
+
 
 
                 })
@@ -99,7 +104,7 @@ export class Login extends React.Component {
         };
     render() {
 
-       
+               console.log(document.cookie);
 
         return (
            <section >

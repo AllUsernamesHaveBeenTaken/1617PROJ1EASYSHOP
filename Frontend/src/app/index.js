@@ -32,6 +32,7 @@ class App extends React.Component {
       this.state = {
         
       };
+       this.getCookie = this.getCookie.bind(this);
     }
 
     // componentWillMount(){         
@@ -52,33 +53,58 @@ class App extends React.Component {
     //             console.log(error);
     //         });
     // }
+    getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
     render() {
-
         
         
-        return (
-
-            <BrowserRouter>    
-                <switch>
-                    <Route path="/welcome" component={Landing} />
-                    <Route exact path="/" component={Home} />
-                    <Route path="/winkels" component={Winkels} />
-                    <Route path="/boodschappen" component={Boodschappen} />
-                    <Route path="/profiel" component={Profiel} />
-                    <Route path="/winkelmandje" component={WinkelMandje} />
-                    
-                    <Route path="/winkel/info/:shopId" component={ShopInfo} />
-                    <Route path="/winkel/producten/:shopId" component={Producten} />
-
-                    <Route exact path="/login" component={Login} />
+  
+        console.log(this.getCookie('loginFlag'));
+        if (this.getCookie('loginFlag')) {
+            return (
+            
+                <BrowserRouter>    
+                    <switch>
+                        <Route path="/welcome" component={Landing} />
+                        <Route exact path="/" component={Home} />
+                        <Route path="/winkels" component={Winkels} />
+                        <Route path="/boodschappen" component={Boodschappen} />
+                        <Route path="/profiel" component={Profiel} />
+                        <Route path="/winkelmandje" component={WinkelMandje} />
                         
-                   
-                </switch>
-            </BrowserRouter>
+                        <Route path="/winkel/info/:shopId" component={ShopInfo} />
+                        <Route path="/winkel/producten/:shopId" component={Producten} />
+
+                       
+                            
+                       
+                    </switch>
+                </BrowserRouter>
 
             
 
-        )
+            )
+        } else {
+            return (
+            
+                <BrowserRouter>    
+                    <switch>
+                        
+
+                        <Route exact path="/" component={Login} />
+                            
+                       
+                    </switch>
+                </BrowserRouter>
+
+            
+
+            )
+        }
+       
     }
 }
 
