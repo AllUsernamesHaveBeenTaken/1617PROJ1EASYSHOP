@@ -5,7 +5,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 import Header  from "../nav/Header"
-
+import {Boodschap}  from "./Boodschap"
 
 
 export class WinkelMandje extends React.Component {
@@ -13,7 +13,12 @@ export class WinkelMandje extends React.Component {
         return (
             <div>
                 <Header/>
-                dit is een test WinkelMandje
+                <div className='wrapper'>
+                	<Boodschap/>
+                	
+                </div>
+
+                
             </div>
         )
     }
