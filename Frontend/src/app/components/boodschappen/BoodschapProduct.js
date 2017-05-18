@@ -49,7 +49,6 @@ export class BoodschapProduct extends React.Component {
                         <div {...StyledLeft}>
                             <h3>{this.props.prName}</h3>
                              <p>Aantal: <span>{this.props.prCount}</span></p>
-                            <a  {...StyledDelete}href="#">Delete</a> 
                         </div>
                         <div {...StyledRight}>
                                                     <div {...StyledImg} {...css({backgroundImage: 'URL("/images/producten/'+this.props.prImg+'") '})}></div>

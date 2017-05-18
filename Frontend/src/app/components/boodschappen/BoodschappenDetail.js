@@ -3,12 +3,22 @@
  */
 import React from "react";
 import axios from 'axios';
+import {css} from 'glamor';
 
 import Header  from "../nav/Header"
 import {ShopTitle } from "../shopInfo/ShopTitle"
 import {ShopHours } from "../shopInfo/ShopHours"
 import {BoodschapProduct} from "./BoodschapProduct"
 
+let StyledDelete = css({
+    textDecoration:'none',
+    color: '#000',
+    backgroundColor: '#fff',
+    padding: '5px 5px',
+    float: 'left',
+    border:'solid',
+    borderWidth:'1px'
+})
 
 export class BoodschappenDetail extends React.Component{
     constructor(props){
@@ -18,7 +28,7 @@ export class BoodschappenDetail extends React.Component{
             productId: '',
             amount: '',
             productsFound: null,
-            productInfo: null
+            productInfo: []
         }
         this.componentDidMount = this.componentDidMount.bind(this);
     }
@@ -56,15 +66,19 @@ export class BoodschappenDetail extends React.Component{
         return(
             <div>
                 <Header/>
-                <ShopTitle/>
-                <ShopHours/>
-                <div>
-                    <h2>
-                        <div>
-                            <BoodschapProduct key={this.state.productInfo['id']} prName={this.state.productInfo['name']} prCount={this.state.amount}prImg={this.state.productInfo['imageName']} />
-                        </div>
-                    </h2>
-                </div>
+                <section className="wrapper">
+                    <ShopTitle/>
+                    <ShopHours/>
+                    <div>
+                        <h2>
+                            <div>
+                                <BoodschapProduct key={this.state.productInfo['id']} prName={this.state.productInfo['name']} prCount={this.state.amount}prImg={this.state.productInfo['imageName']} />
+                            </div>
+                        </h2>
+                    </div>
+                    <a  {...StyledDelete}href="#">I'll deliver!</a>
+                </section>
+
             </div>
         )
     }
