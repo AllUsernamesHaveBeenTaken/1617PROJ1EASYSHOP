@@ -95,6 +95,7 @@ export class Login extends React.Component {
                             
                           
                              localStorage.setItem('id', response.data.users.records[0][0]);
+                             this.props.login()
 
                         })
                         .catch((error) => {});

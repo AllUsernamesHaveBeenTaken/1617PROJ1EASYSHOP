@@ -4,7 +4,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import {css} from 'glamor';
-
+import axios from 'axios';
 import Header  from "../nav/Header"
 
 import {BoodschapProduct} from "./BoodschapProduct"
@@ -57,13 +57,19 @@ export class Boodschap extends React.Component {
         
         }
     }
-     componentDidMount() {
+     componentDidMount(a) {
 
         
        
     }
     placeOrder(){
-        
+         axios.defaults.withCredentials = true;
+        axios.get('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken')+'&filter=users_id,eq,'+localStorage.getItem('id') ).then((response) => {
+                            
+           console.log(response)
+
+        })
+        .catch((error) => {});
     }
     render() {
    
@@ -93,7 +99,7 @@ export class Boodschap extends React.Component {
                     
                     
                     <div {...StyledButton}>
-                    <a {...StyledBestellen} to='/'>Bestellen</a>
+                    <a {...StyledBestellen} onClick={this.placeOrder.bind(this)} to='#'>Bestellen</a>
                     <Link  {...StyledWinkel}to={'/winkel/producten/' + this.props.shopId}>Terug naar winkel</Link>
                     </div>
                     
