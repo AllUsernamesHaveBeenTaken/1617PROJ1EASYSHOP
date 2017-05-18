@@ -86,15 +86,24 @@ export class Login extends React.Component {
              .then((response) => {
                
                axios.post('https://api.easy-shop.xyz/api.php', {token:response.data,withCredentials:true}).then((response) => {
-                    console.log(response)
+               
                     localStorage.setItem('jwtToken', response.data);
-                    document.cookie = "user="+email+"; path=/";
-                    this.props.login()
+                    axios.defaults.withCredentials = true;
+                    axios.get('http://api.easy-shop.xyz/credentials?csrf='+ localStorage.getItem('jwtToken')+'&filter=email,eq,'+email ).then((response) => {
+                        
+                         axios.get('http://api.easy-shop.xyz/users?csrf='+ localStorage.getItem('jwtToken')+'&filter=credentials_id,eq,'+response.data.credentials.records[0][0] ).then((response) => {
+                            
+                          
+                             localStorage.setItem('id', response.data.users.records[0][0]);
+                             this.props.login()
 
-                    
+                        })
+                        .catch((error) => {});
 
 
-
+                    })
+                    .catch((error) => {});
+                
                 })
                 .catch(function (error) {
                 console.log(error);
