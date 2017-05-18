@@ -117,7 +117,7 @@ export const Boodschap = (props) => {
                     </div>
  
                     <div{...styledLinkDiv}>
-                        <Link {...styledLink} {...styledlinkextra}to={"/boodschappen/"+props.id} >Bekijk</Link>
+                        <Link {...styledLink} {...styledlinkextra}to={"/boodschappen/order/"+props.id} >Bekijk</Link>
                     </div>
                 </div>
                 

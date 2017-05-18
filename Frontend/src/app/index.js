@@ -15,6 +15,7 @@ import { Home } from "./components/home/Home"
 import { Landing } from "./components/landing/Landing"
 import { Winkels } from "./components/winkels/Winkels"
 import {  Boodschappen } from "./components/boodschappen/Boodschappen"
+import {  BoodschappenDetail } from "./components/boodschappen/BoodschappenDetail"
 import {  Profiel } from "./components/profiel/Profiel"
 import {  WinkelMandje } from "./components/winkelmandje/WinkelMandje"
 import {  Producten } from "./components/products/Producten"
@@ -55,7 +56,9 @@ class App extends React.Component {
                         <Route exact path="/" component={Profiel} />
                         <Route path="/winkels" component={Winkels} />
                         <Route path="/boodschappen" component={Boodschappen} />
-                       
+                        <Route path="/boodschappen/order/:orderId" component={BoodschappenDetail} />
+
+
                         <Route path="/winkelmandje" component={WinkelMandje} />
                         
                         <Route path="/winkel/info/:shopId" component={ShopInfo} />

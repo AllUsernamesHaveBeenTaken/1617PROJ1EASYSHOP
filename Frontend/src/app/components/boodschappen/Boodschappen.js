@@ -42,8 +42,8 @@ export class Boodschappen extends React.Component {
         super(props);
 
         this.state = {
-            jsonReturnedValueBoodschappen: null,
-            jsonReturnedValueShops: null,
+            orderInfo: null,
+            winkelInfo: null,
             ordersFound: false,
             shopsFound: false,
         }
@@ -51,19 +51,38 @@ export class Boodschappen extends React.Component {
     }
 
     componentDidMount() {
+        var orderInfo = Array();
+
         axios.defaults.withCredentials = true;
-        axios.get('http://api.easy-shop.xyz/orders?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
-            this.setState({ jsonReturnedValueBoodschappen: response.data.orders.records})
-            this.setState({ ordersFound: true})})
+        axios.get('http://api.easy-shop.xyz/orders?csrf='+ localStorage.getItem('jwtToken') )
+            .then((response) => {
+            response.data.orders.records.forEach(function(e){
+                orderInfo.push({orderId: e[0], completed: e[2], available: e[3], shopId:e[8], shopName:null, shopAddress:null})
+                });
+                this.setState({ ordersFound: true})
+            })
             .catch(function (error) {
                 console.log(error);
             });
         axios.get('http://api.easy-shop.xyz/shops?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
-            this.setState({ jsonReturnedValueShops: response.data.shops.records})
-            this.setState({ shopsFound: true})})
+            response.data.shops.records.forEach(function(s){
+                orderInfo.forEach(function(o){
+                    if (o['shopId'] == s[0]){
+                        o.shopName = s[1];
+                        o.shopAddress = s[2];
+                    }
+                })
+
+            });
+
+
+
+            this.setState({ shopsFound: true})
+        })
             .catch(function (error) {
                 console.log(error);
             });
+        this.setState({orderInfo: orderInfo})
     }
 
 
@@ -74,17 +93,17 @@ export class Boodschappen extends React.Component {
                 <section className='wrapper'>
                     <div {...styledDivTop} {...styledwinkelcontainer}>
                         {
-                            this.state.ordersFound && this.state.shopsFound ?
-                                this.state.jsonReturnedValueBoodschappen
+                            this.state.ordersFound ?
+                                this.state.orderInfo
                                     .filter(link => {
-                                        if (link[2] == '0') {
+                                        if (link['completed'] == 0 &&
+                                        link['available'] == 1){
                                             return link;
                                         }
                                     })
                                     .map(function(link) {
-                                        return  <Boodschap key={link[0]} id={link[0]} address={link[6]} shopName={link[8]} />
+                                        return  <Boodschap key={link['orderId']} id={link['orderId']} address={link['shopAddress']} shopName={link['shopName']} />
                                     })
-
                                 :
                                 <p>no orders found</p>
                         }
