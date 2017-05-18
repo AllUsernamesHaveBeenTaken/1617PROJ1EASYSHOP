@@ -64,12 +64,28 @@ export class Boodschap extends React.Component {
     }
     placeOrder(){
          axios.defaults.withCredentials = true;
-        axios.get('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken')+'&filter=users_id,eq,'+localStorage.getItem('id') ).then((response) => {
+        // axios.get('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken')+'&filter=users_id,eq,'+localStorage.getItem('id') ).then((response) => {
+            var d = new Date();                
+           axios.post('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken') , 
+           {
+            
+                creationDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),
+                available:1,
+                expiryDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),
+                paid:0,
+                addresses_id: 1,
+                applicant_id: localStorage.getItem('id'),
+                shops_id: this.props.shopId
+
+           }).then((response) => {
                             
            console.log(response)
 
-        })
-        .catch((error) => {});
+            })
+            .catch((error) => {console.log(error)});
+
+            // })
+        // .catch((error) => {});
     }
     render() {
    
