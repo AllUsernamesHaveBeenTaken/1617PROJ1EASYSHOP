@@ -92,7 +92,7 @@ export default class Header extends React.Component {
       ShowSideNav: false,
       links: [{linkName:'Profiel',address:'/'},
               {linkName:'Winkels',address:'/winkels'},
-              {linkName:'Boodschappen',address:'/boodschappen'},
+              {linkName:'Boodschappen',address:'/boodschappen/overzicht'},
               {linkName:'Winkelmandje',address:'/winkelmandje'},
 
             ],

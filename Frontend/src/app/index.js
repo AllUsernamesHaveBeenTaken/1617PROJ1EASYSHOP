@@ -83,7 +83,7 @@ class App extends React.Component {
                        <Route path="/welcome" component={Landing} />
                         <Route exact path="/" component={Profiel} />
                         <Route path="/winkels" component={Winkels} />
-                        <Route path="/boodschappen" component={Boodschappen} />
+                        <Route path="/boodschappen/overzicht" component={Boodschappen} />
                         <Route path="/boodschappen/order/:orderId" component={BoodschappenDetail} />
 
 

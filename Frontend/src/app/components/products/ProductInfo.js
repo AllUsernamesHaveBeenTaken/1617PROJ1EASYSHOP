@@ -109,11 +109,9 @@ export class ProductInfo extends React.Component {
 		//if winkelmand bestaat
 		else{
 			var boodschappen=JSON.parse(localStorage.getItem('winkelmandje'))
-			console.log(boodschappen)
 			var boodschappen_copy= boodschappen;
 			for (var i = 0; i <= boodschappen.length - 1; i++) {
-				console.log(i)
-
+				
 				//check winkel id bestaat 
 		
 				//if true
