@@ -4,6 +4,7 @@
 import React , { Component }from "react";
 
 import {Link} from 'react-router-dom';
+import { withRouter } from 'react-router-dom' 
 import Validation from 'react-validation';
 import {BrowserRouter, Route, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -65,29 +66,32 @@ let StyledLabelContainer = css({
 })
 
 export class Login extends React.Component {
-    constructor() {
-        super();
-
+    constructor(props,context) {
+        super(props,context);
+   
         this.state = {
             errors: {}
         };
     }
 
+    
+
     handleSubmit(event) {
+        console.log(this);
             var email = this.form.components.email.state.value;
             var pass = this.form.components.password.state.value;
             event.preventDefault();
              axios.defaults.withCredentials = true;
              axios.post('https://api.easy-shop.xyz/login_token.php', {username: email,password: pass,withCredentials:true})
              .then((response) => {
-               console.log(this);
+               
                axios.post('https://api.easy-shop.xyz/api.php', {token:response.data,withCredentials:true}).then((response) => {
                     console.log(response)
                     localStorage.setItem('jwtToken', response.data);
-                    document.cookie = "XSRF-TOKEN="+response.data+"; path=/";
                     document.cookie = "user="+email+"; path=/";
-                    document.cookie = "loginFlag=true; path=/";
-                    location.reload();
+                    this.props.login()
+
+                    
 
 
 
@@ -100,13 +104,15 @@ export class Login extends React.Component {
                  console.log(error);
                 this.form.showError('email','email');
                 this.form.showError('password','password');
-                console.log(this);
+               
             })
         };
+
+
     render() {
 
-               console.log(document.cookie);
-
+              
+       
         return (
            <section >
             <div {...StyledContainer}>
@@ -134,5 +140,6 @@ export class Login extends React.Component {
         )
     }
 }
+
 
 

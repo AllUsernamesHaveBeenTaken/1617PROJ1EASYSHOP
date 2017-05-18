@@ -41,17 +41,15 @@ export class AddCount extends React.Component {
 	constructor() {
 	    super();
 	    this.state = {
-	      Count: 0,
+	      Count: 1,
 	    };
   	}
   	countUp(){
-  		this.state.Count++;
+  		this.props.add()
   	
   	}
   	countDown(){
-  		if (this.state.Count > 0) {
-			this.state.Count--;
-  		} 
+  		this.props.min()
   		 		
   	}
     render() {
@@ -60,7 +58,7 @@ export class AddCount extends React.Component {
         	<section {...StyledSection}>
         		<div {...styledcontainer} className='clearfix'>
 					<div {...styledcount}>
-						<p>{this.state.Count}</p>
+						<p>{this.props.status}</p>
 					</div>
 					<div {...styledMinPlus}>
 						<a {...styledMinPlusLink} onClick={this.countDown.bind(this)}  href='#'>-</a>

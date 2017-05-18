@@ -76,7 +76,7 @@ export class Boodschap extends React.Component {
 
                            
                                this.props.products.map(function(link,i) {
-                                    return  <BoodschapProduct key={link['prId']} prName={link['prName']} prImg={link['prImg']} />
+                                    return  <BoodschapProduct key={link['prId']} prName={link['prName']} prCount={link['prCount']}prImg={link['prImg']} />
             
                                 })
                             
@@ -91,7 +91,7 @@ export class Boodschap extends React.Component {
                     
                     <div {...StyledButton}>
                     <a {...StyledBestellen} to='/'>Bestellen</a>
-                    <Link  {...StyledWinkel}to='/winkel/producten/1'>Terug naar winkel</Link>
+                    <Link  {...StyledWinkel}to={'/winkel/producten/' + this.props.shopId}>Terug naar winkel</Link>
                     </div>
                     
                 </div>

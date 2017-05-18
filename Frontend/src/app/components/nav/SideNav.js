@@ -40,6 +40,7 @@ let CloseContainer = css ({
 
 })
 
+
 let StyledCLose = css({
   textDecoration: 'none',
   fontSize: '40px',

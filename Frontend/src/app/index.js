@@ -31,12 +31,38 @@ class App extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        
+        loginFlag:'notset'
       };
-       this.getCookie = this.getCookie.bind(this);
+
+       
     }
 
- 
+    componentWillMount(){
+
+         axios.defaults.withCredentials = true;
+             axios.get('http://api.easy-shop.xyz/products?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+                    
+
+                   this.setLoginFlagTrue()
+                  
+                    
+                    
+                     
+                })
+                .catch((error) => {
+                     this.setLoginFlagFalse()
+                });
+
+    }
+
+    setLoginFlagTrue(arg){
+        this.setState({loginFlag:'true'});
+        this.forceUpdate()
+    }
+    setLoginFlagFalse(arg){
+        this.setState({loginFlag:'false'});
+        this.forceUpdate()
+    }
     getCookie(name) {
         var value = "; " + document.cookie;
         var parts = value.split("; " + name + "=");
@@ -44,15 +70,17 @@ class App extends React.Component {
     }
     render() {
         
-        
+        console.log()
   
       
-        if (this.getCookie('loginFlag')== 'true') {
+        if (this.state.loginFlag== 'true') {
             return (
             
                 <BrowserRouter>    
                     <switch>
-                        <Route path="/welcome" component={Landing} />
+                        
+                        
+                       <Route path="/welcome" component={Landing} />
                         <Route exact path="/" component={Profiel} />
                         <Route path="/winkels" component={Winkels} />
                         <Route path="/boodschappen" component={Boodschappen} />
@@ -74,14 +102,39 @@ class App extends React.Component {
             
 
             )
-        } else {
+        } 
+        else if (this.state.loginFlag== 'notset') {
+            return (
+            
+                <BrowserRouter>    
+                    <switch>
+                        
+                        
+                       
+                        <Route exact path="/" render={() => (
+                           <p>loading</p>
+                        )} />
+
+                       
+                            
+                       
+                    </switch>
+                </BrowserRouter>
+
+            
+
+            )
+        } 
+        else {
             return (
             
                 <BrowserRouter>    
                     <switch>
                         
 
-                        <Route exact path="/" component={Login} />
+                        <Route  path="/" render={() => (
+                            <Login login={this.setLoginFlagTrue.bind(this)} />
+                        )} />
                             
                        
                     </switch>
