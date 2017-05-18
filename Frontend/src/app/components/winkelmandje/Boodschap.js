@@ -15,7 +15,7 @@ let title = css({
     borderBottom: 'solid',
     width: '100%',
     borderWidth: '1px',
-
+    marginBottom: ' 20px',
     borderColor:'rgba(134, 139, 141, 0.42)',
 })
 let StyledProduct = css({
@@ -42,22 +42,47 @@ let StyledButton = css ({
     marginTop: '25px',
     float: 'left'
 })
+let StyledContainer = css({
+    width: '96%',
+    marginLeft:'2%',
+    marginTop: '20px'
+})
 export class Boodschap extends React.Component {
+    constructor(props) {
+        super(props);
+       
+        this.state = {
+            productFound: this.props.productFound
+        
+        }
+    }
      componentDidMount() {
-       console.log(this)
+       
     }
     render() {
+   
         return (
             <div> 
-                <div className='clearfix'>
-                    <h2 {...title}>Winkelnaam</h2>
-
+                <div {...StyledContainer}className='clearfix'>
+                    <h2 {...title}>{this.props.shopName} {this.props.arrayIndex}</h2>
+                   
                     <div className='clearfix'{...StyledProduct}>
-                        <BoodschapProduct/>
-                    <BoodschapProduct/>
-                    <BoodschapProduct/>
-                    <BoodschapProduct/>
-                   <BoodschapProduct/>
+                        {   
+
+
+                            this.state.productFound ?
+                               this.props.productInfo.map(function(link,i) {
+                                    return  <BoodschapProduct />
+            
+                                })
+                            :
+                            <p>no shopCardFound</p>
+                            
+                        
+
+                       }
+                        
+                       
                     </div>
                     
                     

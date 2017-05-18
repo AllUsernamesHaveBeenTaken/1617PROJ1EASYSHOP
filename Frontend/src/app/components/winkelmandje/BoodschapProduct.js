@@ -25,13 +25,22 @@ let StyledRight = css ({
     width: '50%'
 })
 let StyledPoductContainer = css ({
-      float:'left',
+    float:'left',
     width: '33.33%'
+})
+let StyledDelete = css({
+    textDecoration:'none',
+    color: '#000',
+    backgroundColor: '#fff',
+    padding: '5px 5px',
+    float: 'left',
+    border:'solid',
+    borderWidth:'1px'
 })
 
 export class BoodschapProduct extends React.Component {
      componentDidMount() {
-       console.log(this)
+       
     }
     render() {
         return (
@@ -40,7 +49,7 @@ export class BoodschapProduct extends React.Component {
                         <div {...StyledLeft}>
                             <h3>Product name</h3>
                              <p>Aantal: <span>2</span></p>
-                            <a href="#">Delete</a> 
+                            <a  {...StyledDelete}href="#">Delete</a> 
                         </div>
                         <div {...StyledRight}>
                            

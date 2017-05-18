@@ -52,16 +52,18 @@ export class Producten extends React.Component {
     
     constructor(props) {
 	    super(props);
-	    
+	    console.log(this);
 	    this.state = {
 	      jsonReturnedValue: null,
-	      productFound: false
+	      productFound: false,
+	      shopId: this.props.match.params.shopId
 	    }
 	    this.componentDidMount = this.componentDidMount.bind(this);
 	  }
 
 	    componentDidMount() {
-	       axios.get('http://api.easy-shop.xyz/api.php/products?filter=shops_id,eq,'+this.props.match.params.shopId ).then((response) => {
+	    	 axios.defaults.withCredentials = true;
+	       axios.get('http://api.easy-shop.xyz/api.php/products?csrf='+ localStorage.getItem('jwtToken')+'&filter=shops_id,eq,'+this.state.shopId ).then((response) => {
 	            this.setState({ jsonReturnedValue: response.data.products.records})
 	            this.setState({ productFound: true})
 	            
@@ -75,7 +77,7 @@ export class Producten extends React.Component {
 
 	    }
     render() {
-    	
+    	const shopId = this.state.shopId;
         return (
             <div>
                 <Header/>
@@ -88,7 +90,7 @@ export class Producten extends React.Component {
 	                	{
                             this.state.productFound ?
                                 this.state.jsonReturnedValue.map(function(link) {
-                                    return <div key={link[0]} {...styledInfo}> <ProductInfo price={link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
+                                    return <div key={link[0]} {...styledInfo}> <ProductInfo  productId={link[0]} shopId={shopId} price={link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
             
                                 })
                             :
