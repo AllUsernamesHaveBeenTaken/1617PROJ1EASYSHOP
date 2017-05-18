@@ -49,14 +49,17 @@ let StyledContainer = css({
 })
 export class Boodschap extends React.Component {
     constructor(props) {
+
         super(props);
-       
+      
         this.state = {
-            productFound: this.props.productFound
+            
         
         }
     }
      componentDidMount() {
+
+        
        
     }
     render() {
@@ -64,24 +67,23 @@ export class Boodschap extends React.Component {
         return (
             <div> 
                 <div {...StyledContainer}className='clearfix'>
-                    <h2 {...title}>{this.props.shopName} {this.props.arrayIndex}</h2>
+                    <h2 {...title}>{this.props.shopName}</h2>
                    
                     <div className='clearfix'{...StyledProduct}>
+                        
                         {   
 
 
-                            this.state.productFound ?
-                               this.props.productInfo.map(function(link,i) {
-                                    return  <BoodschapProduct />
+                           
+                               this.props.products.map(function(link,i) {
+                                    return  <BoodschapProduct key={link['prId']} prName={link['prName']} prImg={link['prImg']} />
             
                                 })
-                            :
-                            <p>no shopCardFound</p>
+                            
                             
                         
 
                        }
-                        
                        
                     </div>
                     

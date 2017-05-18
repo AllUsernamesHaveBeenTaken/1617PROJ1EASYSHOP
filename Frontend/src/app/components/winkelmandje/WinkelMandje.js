@@ -47,31 +47,42 @@ export class WinkelMandje extends React.Component {
                 }
                 
             }
-            console.log(shopString)
-            console.log(productString)
+            
             axios.defaults.withCredentials = true;
                 
-            axios.get('http://api.easy-shop.xyz/shops?'+shopString+'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+            axios.get('http://api.easy-shop.xyz/shops?'+shopString+'&satisfy=any&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
                 
-                //  this.state.shopFound = true;
-                // winkelInfo.push({shopName:response.data.name,shopId:response.data.id});
                 
-        
-                // this.state.winkelInfo = winkelInfo;  
-                console.log(response)
+                response.data.shops.records.forEach(function(e) {
+               
+                    winkelInfo.push({shopName:e[1],shopId:e[0],products:[]} );
+                });
+
                
                 axios.defaults.withCredentials = true;
             
-                axios.get('http://api.easy-shop.xyz/products?'+productString+'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
-                    // this.state.productFound = true;
-                 
+                axios.get('http://api.easy-shop.xyz/products?'+productString+'&satisfy=any&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+                    
 
-                    // productInfo.push({productName: response.data.name,productId:response.data.id,productImg:response.data.imageName})
-                   
-                    // this.state.productInfo=productInfo;  
-                   
-                    // this.forceUpdate()  
-                    console.log(response)
+                   response.data.products.records.forEach(function(a) {
+                         
+                        winkelInfo.forEach(function(e) {
+                            
+                           
+                            if (a[5] == e['shopId']) {
+                        
+                                e.products.push({prImg:a[8],prId:a[0],prName:a[1]})
+
+                            }
+                        });
+                    });
+
+
+               
+                     this.state.winkelInfo = winkelInfo;  
+                   this.state.shopFound = true;
+                    this.forceUpdate()  
+                  
                     
                     
                      
@@ -106,7 +117,7 @@ export class WinkelMandje extends React.Component {
                      {
                             this.state.shopFound ?
                                 this.state.winkelInfo.map(function(link,i) {
-                                    return  <Boodschap key={link['shopId']} productFound={productFound} productInfo={productInfo} arrayIndex= {i} shopName= {link['shopName']} />
+                                    return  <Boodschap key={link['shopId']} shopName={link['shopName']} products={link['products']} />
             
                                 })
                             :

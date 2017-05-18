@@ -47,13 +47,12 @@ export class BoodschapProduct extends React.Component {
             <div>
                  <div {...StyledPoductContainer}>
                         <div {...StyledLeft}>
-                            <h3>Product name</h3>
+                            <h3>{this.props.prName}</h3>
                              <p>Aantal: <span>2</span></p>
                             <a  {...StyledDelete}href="#">Delete</a> 
                         </div>
                         <div {...StyledRight}>
-                           
-                            <div {...StyledImg} {...css({backgroundImage: 'URL("/images/producten/image1.png") '})}></div>
+                                                    <div {...StyledImg} {...css({backgroundImage: 'URL("/images/producten/'+this.props.prImg+'") '})}></div>
                         </div>
                 </div>
                 

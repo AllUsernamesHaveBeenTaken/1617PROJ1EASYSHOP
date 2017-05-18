@@ -70,6 +70,7 @@ export class Producten extends React.Component {
 	       axios.get('http://api.easy-shop.xyz/api.php/products?csrf='+ localStorage.getItem('jwtToken')+'&filter=shops_id,eq,'+this.state.shopId ).then((response) => {
 	            this.setState({ jsonReturnedValue: response.data.products.records})
 	            this.setState({ productFound: true})
+                
 	            })
 	          .catch(function (error) {
 	            console.log(error);
@@ -99,12 +100,12 @@ export class Producten extends React.Component {
                                         if (link[1].toLowerCase().indexOf(this.state.product.toLocaleLowerCase()) >= 0 ||
                                             link[1].toLowerCase().indexOf(this.state.product.toLocaleLowerCase()) >= 0
                                         ){
-                                            console.log(link);
+                                            
                                             return link;
                                         }
                                     })
                                     .map(function(link) {
-                                    return <div key={link[0]} {...styledInfo}> <ProductInfo price={link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
+                                    return <div key={link[0]} {...styledInfo}> <ProductInfo shopId={link[5]} productId={link[0]} price={ link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
            
                                 })
                             :
