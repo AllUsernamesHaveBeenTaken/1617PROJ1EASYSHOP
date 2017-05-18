@@ -31,68 +31,68 @@ let styledwinkelcontainer = css({
 
 })
 let styledDivTop = css({
-	
+
 	'@media(min-width: 550px)': {
        marginTop:'25px',
     }
 })
+
+
 export class Winkels extends React.Component {
     constructor(props) {
-    super(props);
-    
-    this.state = {
-      jsonReturnedValue: null,
-      shopsFound: false
+        super(props);
+
+        this.state = {
+            jsonReturnedValue: null,
+            shopsFound: false,
+            winkelNaam:'',
+            postcode: ''
+        }
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
-    this.componentDidMount = this.componentDidMount.bind(this);
-  }
-    
-    componentDidMount() { 
+
+    componentDidMount() {
         axios.defaults.withCredentials = true;
         axios.get('http://api.easy-shop.xyz/shops?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
             this.setState({ jsonReturnedValue: response.data.shops.records})
-            this.setState({ shopsFound: true})
-            
-          
-
-      
-            })
-          .catch(function (error) {
-            console.log(error);
-        });
-
-      
+            this.setState({ shopsFound: true})})
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
-    
+    onChangeSearchable(newWinkelNaam, newPostcode){
+        this.setState({
+            winkelNaam: newWinkelNaam,
+            postcode: newPostcode
+        });
+    }
     render() {
-         
-
         return (
             <div>
                 <Header/>
                 <section className='wrapper'>
-					<div {...styledDivTop}{...styledFilter}>
-						<Filter />
-	                </div>
-				
-					<div {...styledDivTop} {...styledwinkelcontainer}>
-					   {
+                    <div {...styledDivTop}{...styledFilter}>
+                        <Filter changeSearchable={this.onChangeSearchable.bind(this)}/>
+                    </div>
+                    <div {...styledDivTop} {...styledwinkelcontainer}>
+                        {
                             this.state.shopsFound ?
-                                this.state.jsonReturnedValue.map(function(link) {
-                                    return  <Winkel key={link[0]} logo={link[10]} id={link[0]} address={link[2]}shopName= {link[1]} />
-            
-                                })
-                            :
-                            <p>no shops found</p>
-                            
-                        
-
-                       }
-					</div>
+                                this.state.jsonReturnedValue
+                                    .filter(link => {
+                                        if (link[1].toLowerCase().indexOf(this.state.winkelNaam.toLocaleLowerCase()) >= 0 &&
+                                            link[3].toLowerCase().indexOf(this.state.postcode.toLocaleLowerCase()) >= 0){
+                                            return link;
+                                        }
+                                    })
+                                    .map(function(link) {
+                                        return  <Winkel key={link[0]} logo={link[10]} id={link[0]} address={link[2]}shopName= {link[1]} />
+                                    })
+                                :
+                                <p>no shops found</p>
+                        }
+                    </div>
                 </section>
-                
-				
             </div>
         )
     }
