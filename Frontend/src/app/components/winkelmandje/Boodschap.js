@@ -68,7 +68,7 @@ export class Boodschap extends React.Component {
             var d = new Date();                
            axios.post('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken') , 
            {
-            
+      
                 creationDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),
                 available:1,
                 expiryDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),

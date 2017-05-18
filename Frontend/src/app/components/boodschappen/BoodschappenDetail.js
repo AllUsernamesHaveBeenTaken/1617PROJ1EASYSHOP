@@ -18,7 +18,10 @@ export class BoodschappenDetail extends React.Component{
             productId: '',
             amount: '',
             productsFound: null,
-            productInfo: null
+            productInfo: null,
+            productName:'',
+            productImg:''
+
         }
         this.componentDidMount = this.componentDidMount.bind(this);
     }
@@ -34,10 +37,11 @@ export class BoodschappenDetail extends React.Component{
                 productsFound: true,
 
             });
-            axios.get('http://api.easy-shop.xyz/api.php/products/'+this.state.productId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter=id,eq,'+this.state.productId).then((response) => {
-                console.log(response.data);
+            axios.get('http://api.easy-shop.xyz/api.php/products/'+this.state.productId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter[]=id,eq,'+this.state.productId).then((response) => {
+     
                 this.setState({
-                    productInfo: response.data
+                    productName: response.data['name'],
+                    productImg: response.data['imageName']
                 })
 
             })
@@ -53,6 +57,8 @@ export class BoodschappenDetail extends React.Component{
     }
 
     render(){
+        
+
         return(
             <div>
                 <Header/>
@@ -61,7 +67,7 @@ export class BoodschappenDetail extends React.Component{
                 <div>
                     <h2>
                         <div>
-                            <BoodschapProduct key={this.state.productInfo['id']} prName={this.state.productInfo['name']} prCount={this.state.amount}prImg={this.state.productInfo['imageName']} />
+                            <BoodschapProduct  prName={this.state.productName} prCount={this.state.amount}prImg={this.state.productImg} />
                         </div>
                     </h2>
                 </div>
