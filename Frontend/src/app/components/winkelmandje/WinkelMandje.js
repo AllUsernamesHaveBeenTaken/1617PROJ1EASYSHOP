@@ -131,7 +131,7 @@ export class WinkelMandje extends React.Component {
                      {
                             this.state.shopFound ?
                                 this.state.winkelInfo.map(function(link,i) {
-                                    return  <Boodschap key={link['shopId']} shopName={link['shopName']} products={link['products']} />
+                                    return  <Boodschap key={link['shopId']}  shopId={link['shopId']} shopName={link['shopName']} products={link['products']} />
             
                                 })
                             :
