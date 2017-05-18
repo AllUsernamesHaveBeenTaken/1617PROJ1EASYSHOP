@@ -114,6 +114,7 @@ export const Boodschap = (props) => {
                     <div{...styledInfoDiv}>
                         <h2{...styledTitle} {...divMargin}>{props.shopName}</h2>
                         <p {...styledAddres} {...divMargin}>{props.address}</p>
+                        <p {...styledAddres} {...divMargin}>{props.dateAdded}</p>
                     </div>
  
                     <div{...styledLinkDiv}>

@@ -57,7 +57,7 @@ export class Boodschappen extends React.Component {
         axios.get('http://api.easy-shop.xyz/orders?csrf='+ localStorage.getItem('jwtToken') )
             .then((response) => {
             response.data.orders.records.forEach(function(e){
-                orderInfo.push({orderId: e[0], completed: e[2], available: e[3], shopId:e[8], shopName:null, shopAddress:null})
+                orderInfo.push({orderId: e[0], completed: e[2], available: e[3], shopId:e[8], shopName:null, shopAddress:null, dateAdded: e[1]})
                 });
                 this.setState({ ordersFound: true})
             })
@@ -102,7 +102,7 @@ export class Boodschappen extends React.Component {
                                         }
                                     })
                                     .map(function(link) {
-                                        return  <Boodschap key={link['orderId']} id={link['orderId']} address={link['shopAddress']} shopName={link['shopName']} />
+                                        return  <Boodschap key={link['orderId']} id={link['orderId']} address={link['shopAddress']} shopName={link['shopName']} dateAdded={link['dateAdded']}/>
                                     })
                                 :
                                 <p>no orders found</p>
