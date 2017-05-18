@@ -87,8 +87,6 @@ export class Filter extends React.Component {
                         <p{...StyledP}>Vlees</p>
                         <input {...StyledCheck}type="checkbox" name="80plus" />
                         <p{...StyledP}>Andere</p>
-
-
                         <Link {...Button} to="Winkels" type="submit" value="Zoeken">Zoeken</Link>
                     </div>
 

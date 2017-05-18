@@ -60,8 +60,7 @@ let StyledButtonContainer = css ({
 })
 let StyledShopHours = css({
     
-}
-)
+})
 
 export class ShopInfo extends React.Component {
 	
@@ -70,11 +69,11 @@ export class ShopInfo extends React.Component {
         return (
         	<section>
                
-        	   <Header/ >
+        	   <Header/>
                <Banner/>
                <div className='wrapper clearfix'>
                     <div {...StyledContainer}>
-                        <ShopTitle/ >
+                        <ShopTitle/>
                         <div {...StyledButtonContainer}>
                              <Link {...StyledButton}to='/winkell/col/producten'>Start met winkelen</Link>
                         </div>
