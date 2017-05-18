@@ -7,6 +7,8 @@ import axios from 'axios';
 import Header  from "../nav/Header"
 import {ShopTitle } from "../shopInfo/ShopTitle"
 import {ShopHours } from "../shopInfo/ShopHours"
+import {BoodschapProduct} from "./BoodschapProduct"
+
 
 export class BoodschappenDetail extends React.Component{
     constructor(props){
@@ -15,7 +17,8 @@ export class BoodschappenDetail extends React.Component{
             orderId: this.props.match.params.orderId,
             productId: '',
             amount: '',
-            productsFound: null
+            productsFound: null,
+            productInfo: null
         }
         this.componentDidMount = this.componentDidMount.bind(this);
     }
@@ -33,6 +36,9 @@ export class BoodschappenDetail extends React.Component{
             });
             axios.get('http://api.easy-shop.xyz/api.php/products/'+this.state.productId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter=id,eq,'+this.state.productId).then((response) => {
                 console.log(response.data);
+                this.setState({
+                    productInfo: response.data
+                })
 
             })
                 .catch(function (error) {
@@ -43,6 +49,7 @@ export class BoodschappenDetail extends React.Component{
             .catch(function (error) {
                 console.log(error);
             });
+        console.log(this.state.productInfo);
     }
 
     render(){
@@ -54,7 +61,7 @@ export class BoodschappenDetail extends React.Component{
                 <div>
                     <h2>
                         <div>
-
+                            <BoodschapProduct key={this.state.productInfo['id']} prName={this.state.productInfo['name']} prCount={this.state.amount}prImg={this.state.productInfo['imageName']} />
                         </div>
                     </h2>
                 </div>
