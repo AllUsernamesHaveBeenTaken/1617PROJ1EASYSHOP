@@ -102,7 +102,7 @@ export class ProductInfo extends React.Component {
 		var arg = this
 		if (localStorage.getItem("winkelmandje") === null) {
 
-  			var winkelmandje =[{WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: 2}]},]
+  			var winkelmandje =[{WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: this.state.Count}]},]
   			localStorage.setItem('winkelmandje',JSON.stringify(winkelmandje));
 			// console.log(JSON.parse(localStorage.getItem('winkelmandje'))[0]);
 		}
@@ -121,12 +121,12 @@ export class ProductInfo extends React.Component {
 					for (var x = 0; x <= boodschappen[i]['Boodschappen'].length - 1; x++) {
 						
 						if (boodschappen[i]['Boodschappen'][x]['ProductId'] == arg.props.productId ) {
-							boodschappen[i]['Boodschappen'][x]['Count']=1;
+							boodschappen[i]['Boodschappen'][x]['Count']=this.state.Count;
 							notFound= false;
 						}
 					}
 					if (notFound) {
-						boodschappen[i]['Boodschappen'].push({ProductId: arg.props.productId,Count: 2})
+						boodschappen[i]['Boodschappen'].push({ProductId: arg.props.productId,Count: this.state.Count})
 					}
 					
 
@@ -137,7 +137,7 @@ export class ProductInfo extends React.Component {
 				//if false
 				else {
 					var boodschappen=JSON.parse(localStorage.getItem('winkelmandje'))
-					boodschappen.push({WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: 2}]})
+					boodschappen.push({WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: this.state.Count}]})
   					localStorage.setItem('winkelmandje',JSON.stringify(boodschappen));
 				}
 			}

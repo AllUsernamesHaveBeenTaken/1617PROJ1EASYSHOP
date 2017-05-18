@@ -48,7 +48,7 @@ export class BoodschapProduct extends React.Component {
                  <div {...StyledPoductContainer}>
                         <div {...StyledLeft}>
                             <h3>{this.props.prName}</h3>
-                             <p>Aantal: <span>2</span></p>
+                             <p>Aantal: <span>{this.props.prCount}</span></p>
                             <a  {...StyledDelete}href="#">Delete</a> 
                         </div>
                         <div {...StyledRight}>
