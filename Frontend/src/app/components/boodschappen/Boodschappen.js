@@ -60,11 +60,7 @@ export class Boodschappen extends React.Component {
                 orderInfo.push({orderId: e[0], completed: e[2], available: e[3], shopId:e[8], shopName:null, shopAddress:null, dateAdded: e[1]})
                 });
                 this.setState({ ordersFound: true})
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        axios.get('http://api.easy-shop.xyz/shops?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+                 axios.get('http://api.easy-shop.xyz/shops?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
             response.data.shops.records.forEach(function(s){
                 orderInfo.forEach(function(o){
                     if (o['shopId'] == s[0]){
@@ -82,6 +78,11 @@ export class Boodschappen extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+       
         this.setState({orderInfo: orderInfo})
     }
 
