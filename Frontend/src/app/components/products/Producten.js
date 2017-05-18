@@ -52,20 +52,25 @@ export class Producten extends React.Component {
     
     constructor(props) {
 	    super(props);
-	    
+	    console.log(this);
 	    this.state = {
 	      jsonReturnedValue: null,
 	      productFound: false,
+	      shopId: this.props.match.params.shopId,
+
             product: '',
             stews: '0'
+
 	    }
 	    this.componentDidMount = this.componentDidMount.bind(this);
 	  }
 
 	    componentDidMount() {
-	       axios.get('http://api.easy-shop.xyz/api.php/products?filter=shops_id,eq,'+this.props.match.params.shopId ).then((response) => {
+	    	 axios.defaults.withCredentials = true;
+	       axios.get('http://api.easy-shop.xyz/api.php/products?csrf='+ localStorage.getItem('jwtToken')+'&filter=shops_id,eq,'+this.state.shopId ).then((response) => {
 	            this.setState({ jsonReturnedValue: response.data.products.records})
 	            this.setState({ productFound: true})
+                
 	            })
 	          .catch(function (error) {
 	            console.log(error);
@@ -78,45 +83,45 @@ export class Producten extends React.Component {
         });
     }
     render() {
-    	
+    	const shopId = this.state.shopId;
         return (
             <div>
                 <Header/>
-              	<Banner/>
+                <Banner/>
                 <section className='wrapper clearfix'>
-                	<div{...StyledFilter}>
-						<Filter changeSearchable={this.onChangeSearchable.bind(this)}/>
-	                </div>
-	                <div{...styledInfoContainer}>
-	                	{
+                    <div{...StyledFilter}>
+                        <Filter changeSearchable={this.onChangeSearchable.bind(this)}/>
+                    </div>
+                    <div{...styledInfoContainer}>
+                        {
                             this.state.productFound ?
                                 this.state.jsonReturnedValue
                                     .filter(link => {
                                         if (link[1].toLowerCase().indexOf(this.state.product.toLocaleLowerCase()) >= 0 ||
                                             link[1].toLowerCase().indexOf(this.state.product.toLocaleLowerCase()) >= 0
                                         ){
-                                            console.log(link);
+                                            
                                             return link;
                                         }
                                     })
-									.map(function(link) {
-                                    return <div key={link[0]} {...styledInfo}> <ProductInfo price={link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
-            
+                                    .map(function(link) {
+                                    return <div key={link[0]} {...styledInfo}> <ProductInfo shopId={link[5]} productId={link[0]} price={ link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
+           
                                 })
                             :
                             <p>no shops found</p>
-                            
-                        
-
+                           
+                       
+ 
                        }
-	                	
-	                	
-	                </div>
-                
-                </section>
-                
+                       
+                       
+                    </div>
                
-               	
+                </section>
+               
+               
+               
             </div>
         )
     }

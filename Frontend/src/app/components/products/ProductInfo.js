@@ -82,6 +82,56 @@ let StyledDrop = css ({
 
 export class ProductInfo extends React.Component {
 	
+	handelAdd(event){
+		//check winkelmand bestaat
+		var arg = this
+		if (localStorage.getItem("winkelmandje") === null) {
+
+  			var winkelmandje =[{WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: 2}]},]
+  			localStorage.setItem('winkelmandje',JSON.stringify(winkelmandje));
+			// console.log(JSON.parse(localStorage.getItem('winkelmandje'))[0]);
+		}
+		//if winkelmand bestaat
+		else{
+			var boodschappen=JSON.parse(localStorage.getItem('winkelmandje'))
+			for (var i = 0; i <= boodschappen.length - 1; i++) {
+				
+
+				//check winkel id bestaat 
+		
+				//if true
+				if (boodschappen[i]['WinkelId']== arg.props.shopId) {
+		
+					var notFound = true;
+					for (var x = 0; x <= boodschappen[i]['Boodschappen'].length - 1; x++) {
+						
+						if (boodschappen[i]['Boodschappen'][x]['ProductId'] == arg.props.productId ) {
+							boodschappen[i]['Boodschappen'][x]['Count']=1;
+							notFound= false;
+						}
+					}
+					if (notFound) {
+						boodschappen[i]['Boodschappen'].push({ProductId: arg.props.productId,Count: 2})
+					}
+					
+
+					localStorage.setItem('winkelmandje',JSON.stringify(boodschappen));
+
+
+				} 
+				//if false
+				else {
+					var boodschappen=JSON.parse(localStorage.getItem('winkelmandje'))
+					boodschappen.push({WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: 2}]})
+  					localStorage.setItem('winkelmandje',JSON.stringify(boodschappen));
+				}
+			}
+			
+		
+		}
+		
+
+	}
     render() {
     	
         return (
@@ -98,7 +148,7 @@ export class ProductInfo extends React.Component {
 						<AddCount/>
 			
         		</div>
-        		<div {...StyledUnderRight}> <button {...StyledButton}>Voeg toe</button> </div>
+        		<div {...StyledUnderRight} onClick={this.handelAdd.bind(this)}> <button {...StyledButton}>Voeg toe</button> </div>
             </div>
         )
     }

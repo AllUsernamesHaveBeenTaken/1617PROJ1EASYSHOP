@@ -97,6 +97,7 @@ export class Login extends React.Component {
                 });
             })
             .catch((error) => { 
+                 console.log(error);
                 this.form.showError('email','email');
                 this.form.showError('password','password');
                 console.log(this);
