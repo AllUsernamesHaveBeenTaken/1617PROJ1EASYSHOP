@@ -56,12 +56,11 @@ export class Producten extends React.Component {
 	    this.state = {
 	      jsonReturnedValue: null,
 	      productFound: false,
-<<<<<<< HEAD
-	      shopId: this.props.match.params.shopId
-=======
+	      shopId: this.props.match.params.shopId,
+
             product: '',
             stews: '0'
->>>>>>> 4d0fe890c279b1c31723aa1c77587b701b43ccaf
+
 	    }
 	    this.componentDidMount = this.componentDidMount.bind(this);
 	  }
@@ -87,18 +86,14 @@ export class Producten extends React.Component {
         return (
             <div>
                 <Header/>
-              	<Banner/>
+                <Banner/>
                 <section className='wrapper clearfix'>
-                	<div{...StyledFilter}>
-						<Filter changeSearchable={this.onChangeSearchable.bind(this)}/>
-	                </div>
-	                <div{...styledInfoContainer}>
-	                	{
+                    <div{...StyledFilter}>
+                        <Filter changeSearchable={this.onChangeSearchable.bind(this)}/>
+                    </div>
+                    <div{...styledInfoContainer}>
+                        {
                             this.state.productFound ?
-<<<<<<< HEAD
-                                this.state.jsonReturnedValue.map(function(link) {
-                                    return <div key={link[0]} {...styledInfo}> <ProductInfo  productId={link[0]} shopId={shopId} price={link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
-=======
                                 this.state.jsonReturnedValue
                                     .filter(link => {
                                         if (link[1].toLowerCase().indexOf(this.state.product.toLocaleLowerCase()) >= 0 ||
@@ -108,25 +103,24 @@ export class Producten extends React.Component {
                                             return link;
                                         }
                                     })
-									.map(function(link) {
+                                    .map(function(link) {
                                     return <div key={link[0]} {...styledInfo}> <ProductInfo price={link[2]} name={link[1]} description= {link[6]} price_per_kg={link[7]} image={link[8]} /> </div>
->>>>>>> 4d0fe890c279b1c31723aa1c77587b701b43ccaf
-            
+           
                                 })
                             :
                             <p>no shops found</p>
-                            
-                        
-
+                           
+                       
+ 
                        }
-	                	
-	                	
-	                </div>
-                
-                </section>
-                
+                       
+                       
+                    </div>
                
-               	
+                </section>
+               
+               
+               
             </div>
         )
     }
