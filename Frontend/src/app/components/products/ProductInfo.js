@@ -81,7 +81,22 @@ let StyledDrop = css ({
 })
 
 export class ProductInfo extends React.Component {
-	
+	constructor() {
+	    super();
+	    this.state = {
+	      Count: 1,
+	    };
+  	}
+  	countUp(){
+  		this.state.Count++;
+  	
+  	}
+  	countDown(){
+  		if (this.state.Count > 1) {
+			this.state.Count--;
+  		} 
+  		 		
+  	}
 	handelAdd(event){
 		//check winkelmand bestaat
 		var arg = this
@@ -145,7 +160,7 @@ export class ProductInfo extends React.Component {
         		</div>
         		<div {...StyledUnderLeft}>
 					
-						<AddCount/>
+						<AddCount status={this.state.Count }add={this.countUp.bind(this)} min={this.countDown.bind(this)} />
 			
         		</div>
         		<div {...StyledUnderRight} onClick={this.handelAdd.bind(this)}> <button {...StyledButton}>Voeg toe</button> </div>

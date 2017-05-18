@@ -21,6 +21,7 @@ export class WinkelMandje extends React.Component {
         
         }
        }
+       
     componentDidMount(){
         if (localStorage.getItem("winkelmandje") !== null) {
            
@@ -60,8 +61,8 @@ export class WinkelMandje extends React.Component {
 
                
                 axios.defaults.withCredentials = true;
-            
-                axios.get('http://api.easy-shop.xyz/products?'+productString+'&satisfy=any&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+             axios.get
+               ('http://api.easy-shop.xyz/products?'+productString+'&satisfy=any&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
                     
 
                    response.data.products.records.forEach(function(a) {
