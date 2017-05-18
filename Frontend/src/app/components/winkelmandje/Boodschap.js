@@ -62,6 +62,9 @@ export class Boodschap extends React.Component {
         
        
     }
+    placeOrder(){
+        
+    }
     render() {
    
         return (
