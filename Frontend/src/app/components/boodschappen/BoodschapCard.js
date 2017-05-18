@@ -54,7 +54,8 @@ let styledLink = css ({
 
 let styledTitle = css ({
     fontWeight: '300',
-    float:'left'
+    float:'left',
+    width: '80%'
 })
 let styledAfstand = css({
     float:'left',

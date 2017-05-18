@@ -91,7 +91,7 @@ export class Boodschappen extends React.Component {
             <div>
                 <Header/>
                 <section className='wrapper'>
-                    <div {...styledDivTop} {...styledwinkelcontainer}>
+                    <div {...styledDivTop} >
                         {
                             this.state.ordersFound ?
                                 this.state.orderInfo
