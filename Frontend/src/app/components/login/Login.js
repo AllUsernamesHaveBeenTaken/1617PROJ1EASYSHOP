@@ -130,7 +130,7 @@ export class Login extends React.Component {
             <div {...StyledLabelContainer}>
                 <label {...StyledLabel}>
                     Email*
-                    <Validation.components.Input {...StyledInput} value='admin' name='email' validations={['required']}/>
+                    <Validation.components.Input {...StyledInput} value='test1@outlook.com' name='email' validations={['required']}/>
                 </label>
             </div>
             <div{...StyledLabelContainer} >
