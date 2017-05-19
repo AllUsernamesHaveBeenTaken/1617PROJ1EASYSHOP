@@ -11,14 +11,17 @@ import {ShopHours } from "../shopInfo/ShopHours"
 import {BoodschapProduct} from "./BoodschapProduct"
 
 let StyledDelete = css({
+    fontSize: '20px',
     textDecoration:'none',
-    color: '#000',
-    backgroundColor: '#fff',
-    padding: '5px 5px',
-    float: 'left',
+    color: '#fff',
+    backgroundColor: '#000',
+    padding: '10px',
+    float: 'right',
     border:'solid',
-    borderWidth:'1px'
+    borderWidth:'1px',
+    margin: '10px'
 })
+
 
 export class BoodschappenDetail extends React.Component{
     constructor(props){
@@ -45,7 +48,6 @@ export class BoodschappenDetail extends React.Component{
 
             });
             axios.get('http://api.easy-shop.xyz/api.php/products/'+this.state.productId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter=id,eq,'+this.state.productId).then((response) => {
-                console.log(response.data);
                 this.setState({
                     productInfo: response.data
                 })
@@ -59,24 +61,61 @@ export class BoodschappenDetail extends React.Component{
             .catch(function (error) {
                 console.log(error);
             });
-        console.log(this.state.productInfo);
-    }
+    };
 
+    doDelivery() {
+        var orderJSON;
+        var addressJSON;
+        axios.defaults.withCredentials = true;
+        axios.get('http://api.easy-shop.xyz/orders/'+this.props.match.params.orderId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter=id,eq,'+this.props.match.params.orderId).then((response => {
+            orderJSON = response.data;
+            axios.get('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken')+'&filter=users_id,eq,'+response.data.applicant_id ).then((response) =>{
+                addressJSON = response.data.addresses.records[0];
+
+                axios({
+                    method: 'post',
+                    url: 'http://api.easy-shop.xyz/deliveries?csrf='+ localStorage.getItem('jwtToken') ,
+                    data: {
+                        deliveryDate: new Date().getDay()+'-'+new Date().getMonth()+1+'-'+new Date().getFullYear()+ ' '+new Date().getHours()+ ':'+new Date().getMinutes()+':'+new Date().getSeconds(),
+                        deliverer_id:localStorage.getItem('id'),
+                        orders_id: this.props.match.params.orderId,
+                        orders_addresses_id:addressJSON[1],
+                        applicant_id: orderJSON['applicant_id'],
+                        orders_shops_id: orderJSON['shops_id']
+                    },
+                    header: {'x-www-form-urlencoded':'rfc1738'}
+                })
+                    .then((response) => {
+
+                });
+                axios({
+                    method: 'put',
+                    url: 'http://api.easy-shop.xyz/orders/'+this.props.match.params.orderId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter=id,eq,'+this.props.match.params.orderId ,
+                    data: {
+                        available: '0'
+                    },
+                    header: {'x-www-form-urlencoded':'rfc1738'}
+                })
+                    .catch((error) => {console.log(error)});
+            })
+                .catch((error) => {});
+        }))
+
+
+    }
     render(){
         return(
             <div>
                 <Header/>
                 <section className="wrapper">
-                    <ShopTitle/>
-                    <ShopHours/>
                     <div>
-                        <h2>
-                            <div>
-                                <BoodschapProduct key={this.state.productInfo['id']} prName={this.state.productInfo['name']} prCount={this.state.amount}prImg={this.state.productInfo['imageName']} />
-                            </div>
-                        </h2>
+                        <ShopTitle/>
+                        <ShopHours/>
                     </div>
-                    <a  {...StyledDelete}href="#">I'll deliver!</a>
+                        <h2>
+                            <BoodschapProduct key={this.state.productInfo['id']} prName={this.state.productInfo['name']} prCount={this.state.amount}prImg={this.state.productInfo['imageName']} />
+                        </h2>
+                    <a  {...StyledDelete} onClick={this.doDelivery.bind(this)}>I'll deliver!</a>
                 </section>
 
             </div>

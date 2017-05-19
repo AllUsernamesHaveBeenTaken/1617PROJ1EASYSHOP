@@ -70,9 +70,9 @@ export class Boodschap extends React.Component {
               method: 'post',
               url: 'http://api.easy-shop.xyz/orders?csrf='+ localStorage.getItem('jwtToken') ,
               data: {
-                creationDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),
+                creationDate: new Date().getDay()+'-'+new Date().getMonth()+1+'-'+new Date().getFullYear()+ ' '+new Date().getHours()+ ':'+new Date().getMinutes()+':'+new Date().getSeconds(),
                 available:1,
-                expiryDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),
+                expiryDate: new Date().getDay()+'-'+new Date().getMonth()+1+'-'+new Date().getFullYear()+ ' '+new Date().getHours()+ ':'+new Date().getMinutes()+':'+new Date().getSeconds(),
                 paid:0,
                 addresses_id: response.data.addresses.records[0][0],
                 applicant_id: localStorage.getItem('id'),
@@ -81,7 +81,6 @@ export class Boodschap extends React.Component {
               header: {'x-www-form-urlencoded':'rfc1738'}
             }).then((response) => {
                             
-           console.log(response)
 
             })
             .catch((error) => {console.log(error)});

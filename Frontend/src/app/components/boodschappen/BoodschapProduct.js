@@ -18,7 +18,8 @@ let StyledImg = css({
 })
 let StyledLeft = css ({
     float:'left',
-    width: '50%'
+    width: '50%',
+    padding:'10px'
 })
 let StyledRight = css ({
     float:'left',
@@ -26,16 +27,9 @@ let StyledRight = css ({
 })
 let StyledPoductContainer = css ({
     float:'left',
-    width: '33.33%'
-})
-let StyledDelete = css({
-    textDecoration:'none',
-    color: '#000',
-    backgroundColor: '#fff',
-    padding: '5px 5px',
-    float: 'left',
-    border:'solid',
-    borderWidth:'1px'
+    width: '77%',
+    border: 'solid 1px',
+    marginLeft: '50px'
 })
 
 export class BoodschapProduct extends React.Component {

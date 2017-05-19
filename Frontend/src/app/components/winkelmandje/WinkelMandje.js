@@ -18,13 +18,15 @@ export class WinkelMandje extends React.Component {
        
           shopFound: false,
           productFound:false
-        
-        }
-       }
+        };
+        console.log(new Date().getDay()+'-'+new Date().getMonth()+'-'+new Date().getFullYear()+ ' '+new Date().getHours()+ ':'+new Date().getMinutes()+':'+new Date().getSeconds())
+
+    }
 
     componentDidMount(){
         if (localStorage.getItem("winkelmandje") !== null) {
-           
+
+
             var winkelInfo = Array();
             var productInfo= Array();
             var shopString=''
@@ -64,7 +66,7 @@ export class WinkelMandje extends React.Component {
                 axios.defaults.withCredentials = true;
              axios.get
                ('http://api.easy-shop.xyz/products?'+productString+'&satisfy=any&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
-                    
+
 
                    response.data.products.records.forEach(function(a) {
 
@@ -89,7 +91,8 @@ export class WinkelMandje extends React.Component {
 
                             }
                         });
-                    });
+
+                   });
 
 
                
