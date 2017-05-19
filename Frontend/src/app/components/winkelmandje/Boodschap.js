@@ -64,28 +64,30 @@ export class Boodschap extends React.Component {
     }
     placeOrder(){
          axios.defaults.withCredentials = true;
-        // axios.get('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken')+'&filter=users_id,eq,'+localStorage.getItem('id') ).then((response) => {
-            var d = new Date();                
-           axios.post('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken') , 
-           {
-      
+        axios.get('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken')+'&filter=users_id,eq,'+localStorage.getItem('id') ).then((response) => {
+            var d = new Date();     
+            axios({
+              method: 'post',
+              url: 'http://api.easy-shop.xyz/orders?csrf='+ localStorage.getItem('jwtToken') ,
+              data: {
                 creationDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),
                 available:1,
                 expiryDate: d.getDay()+'-'+d.getMonth()+1+'-'+d.getFullYear()+ ' '+d.getHours()+ ':'+d.getMinutes()+':'+d.getSeconds(),
                 paid:0,
-                addresses_id: 1,
+                addresses_id: response.data.addresses.records[0][0],
                 applicant_id: localStorage.getItem('id'),
                 shops_id: this.props.shopId
-
-           }).then((response) => {
+              },
+              header: {'x-www-form-urlencoded':'rfc1738'}
+            }).then((response) => {
                             
            console.log(response)
 
             })
             .catch((error) => {console.log(error)});
 
-            // })
-        // .catch((error) => {});
+            })
+        .catch((error) => {});
     }
     render() {
    

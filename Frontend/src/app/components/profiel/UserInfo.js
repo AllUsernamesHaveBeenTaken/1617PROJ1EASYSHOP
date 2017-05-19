@@ -38,9 +38,9 @@ export class UserInfo extends React.Component {
                 <div className='clearfix'{...StyledContainer}>
                     <div {...pic} {...css({backgroundImage: 'URL("/images/users/pic.jpg") '})}></div>
                     <div {...StyledInfoContainer}>
-                        <p>Firestname lastmane</p>
-                        <p>Email</p>
-                        <p>Kaaistraat 1790 Affligem</p>
+                        <p>{this.props.name}</p>
+                        <p>{this.props.email}</p>
+                        <p>{this.props.address}</p>
                     </div> 
                 </div>
                 
