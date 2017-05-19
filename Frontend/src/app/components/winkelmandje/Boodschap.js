@@ -81,7 +81,29 @@ export class Boodschap extends React.Component {
               header: {'x-www-form-urlencoded':'rfc1738'}
             }).then((response) => {
                             
-           console.log(response)
+                var obj = '{';
+                this.props.products.forEach(function(element,i) {
+                     axios({
+                      method: 'post',
+                      url: 'http://api.easy-shop.xyz/orders_has_products?csrf='+ localStorage.getItem('jwtToken') ,
+                      data: {
+                            orders_id: parseInt(localStorage.getItem('id')) ,
+                            products_id: element.prId,
+                            amount: element.prCount
+                      },
+                      header: {'x-www-form-urlencoded':'rfc1738'}
+                        }).then((response) => {
+                                
+                    console.log(response)})
+                        .catch((error) => {console.log(error)});
+                        
+
+
+                    });
+                  
+                
+               
+                
 
             })
             .catch((error) => {console.log(error)});
