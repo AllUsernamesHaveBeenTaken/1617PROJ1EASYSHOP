@@ -81,7 +81,7 @@ export class Boodschap extends React.Component {
               header: {'x-www-form-urlencoded':'rfc1738'}
             }).then((response) => {
                             
-<<<<<<< HEAD
+
                 var obj = '{';
                 this.props.products.forEach(function(element,i) {
                      axios({
@@ -105,8 +105,6 @@ export class Boodschap extends React.Component {
                 
                
                 
-=======
->>>>>>> 0c6c9e8761bbe836fd2cfeef96d8c862a8077e60
 
             })
             .catch((error) => {console.log(error)});
