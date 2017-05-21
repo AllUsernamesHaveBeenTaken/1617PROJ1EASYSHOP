@@ -40,6 +40,7 @@ let CloseContainer = css ({
 
 })
 
+
 let StyledCLose = css({
   textDecoration: 'none',
   fontSize: '40px',
@@ -50,6 +51,9 @@ let StyledCLose = css({
 export default class SideNav extends React.Component {
   handleClickClose(e){
     this.props.closeNav()
+  }
+  logout(){
+    this.props.logout()
   }
   render() {
     return (
@@ -64,6 +68,7 @@ export default class SideNav extends React.Component {
             
           })
         }
+         <a {...StyledSideLink}   onClick={this.logout.bind(this)} href="#">logout</a>
              
         </div>
     );

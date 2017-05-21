@@ -56,30 +56,43 @@ let StyledP = css({
 
 
 
-export const Filter = (props) => {
-    return(
-        <section>
-            <div className="clearfix">
-                <div {...FilterContainer}>
-                    <h2{...Styledh1}>Zoeken</h2>
-                    <input {...StyledInput} type="text" placeholder="Zoek product" name="Product" />
-                    
+export class Filter extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            product: '',
+            stews: '0'
+        };
+        this.onChange = this.onChange.bind(this);
+    }
 
-                    <h3{...Styledh1}>Categorie</h3>
-                    <input {...StyledCheck} type="checkbox" name="020" />
-                    <p{...StyledP}>Drogevoeding</p>
-                    <input {...StyledCheck}type="checkbox" name="2050" />
-                    <p{...StyledP}>Groeten</p>
-                    <input {...StyledCheck}type="checkbox" name="5080" />
-                    <p{...StyledP}>Vlees</p>
-                    <input {...StyledCheck}type="checkbox" name="80plus" />
-                    <p{...StyledP}>Andere</p>
+    onChange(e){
+        this.setState({ [e.target.name]: e.target.value }, () => {
+            this.props.changeSearchable(this.state.product, this.state.stews);
+        });
+    }
+    render(){
+        return(
+            <section>
+                <div className="clearfix">
+                    <div {...FilterContainer}>
+                        <h2{...Styledh1}>Vind uw product!</h2>
+                        <input {...StyledInput} type="text" value={this.state.product} onChange={this.onChange} placeholder="Zoek product" name="product" />
+                        <h3{...Styledh1}>Categorie</h3>
+                        <input {...StyledCheck} type="checkbox" onChange={this.onChange} name="stews" value="stews" />
+                        <p{...StyledP}>Drogevoeding</p>
+                        <input {...StyledCheck}type="checkbox" name="2050" />
+                        <p{...StyledP}>Groeten</p>
+                        <input {...StyledCheck}type="checkbox" name="5080" />
+                        <p{...StyledP}>Vlees</p>
+                        <input {...StyledCheck}type="checkbox" name="80plus" />
+                        <p{...StyledP}>Andere</p>
+                        <Link {...Button} to="Winkels" type="submit" value="Zoeken">Zoeken</Link>
+                    </div>
 
-               
-                    <Link {...Button} to="Winkels" type="submit" value="Zoeken">Zoeken</Link>
                 </div>
+            </section>
+        );
+    }
 
-            </div>
-        </section>
-    );
 }

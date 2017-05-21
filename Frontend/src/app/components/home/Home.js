@@ -10,11 +10,16 @@ import { Banner } from "./Banner"
 
 
 export class Home extends React.Component {
-
+	componentWillMount(props = this.props){
+		console.log(props)
+	}
     render() {
+    	console.log(this.props)
         return (
         	<div>
-                <Header/>			
+                <Header/>	
+               	
+
             </div>
         )
     }

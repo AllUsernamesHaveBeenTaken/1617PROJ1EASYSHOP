@@ -11,7 +11,6 @@ let StyledImg = css({
 	width: '35%',
 	marginLeft: '5%',
 	float: 'left',
-	backgroundImage: 'url("/images/productImg@2x.png")',
 	backgroundRepeat: 'no-repeat',
 	backgroundPosition: '50% 50%',
 	backgroundSize: 'contain',
@@ -82,24 +81,92 @@ let StyledDrop = css ({
 })
 
 export class ProductInfo extends React.Component {
-	
+	constructor() {
+	    super();
+	    this.state = {
+	      Count: 1,
+	    };
+  	}
+  	countUp(){
+  		this.state.Count++;
+  	
+  	}
+  	countDown(){
+  		if (this.state.Count > 1) {
+			this.state.Count--;
+  		} 
+  		 		
+  	}
+	handelAdd(event){
+		//check winkelmand bestaat
+		var arg = this
+		if (localStorage.getItem("winkelmandje") === null) {
+
+  			var winkelmandje =[{WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: this.state.Count}]},]
+  			localStorage.setItem('winkelmandje',JSON.stringify(winkelmandje));
+			// console.log(JSON.parse(localStorage.getItem('winkelmandje'))[0]);
+		}
+		//if winkelmand bestaat
+		else{
+			var boodschappen=JSON.parse(localStorage.getItem('winkelmandje'))
+			var boodschappen_copy= boodschappen;
+			for (var i = 0; i <= boodschappen.length - 1; i++) {
+				
+				//check winkel id bestaat 
+		
+				//if true
+				if (boodschappen[i]['WinkelId']== arg.props.shopId) {
+				
+					var notFound = true;
+				
+					for (var x = 0; x <= boodschappen[i]['Boodschappen'].length - 1; x++) {
+							
+						if (boodschappen[i]['Boodschappen'][x]['ProductId'] == arg.props.productId) {
+							boodschappen_copy[i]['Boodschappen'][x]['Count']=this.state.Count;
+						
+							notFound= false;
+					
+						}
+					}
+					if (notFound) {
+						boodschappen_copy[i]['Boodschappen'].push({ProductId: arg.props.productId,Count: this.state.Count})
+					}
+					
+					
+
+
+				} 
+				//if false
+				else  {
+					
+					boodschappen_copy.push({WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: this.state.Count}]})
+  					
+				}
+				localStorage.setItem('winkelmandje',JSON.stringify(boodschappen_copy));
+			}
+			
+		
+		}
+		
+
+	}
     render() {
     	
         return (
         	<div {...StyledBorder} className='clearfix'>
-        		<div {...StyledImg} ></div>
+        		<div {...StyledImg} {...css({backgroundImage: 'URL("/images/producten/'+this.props.image+'") '})}></div>
         		<div {...StyledRight} >
-        			<h2 {...StyledTitle}>BARILLA</h2>
-        			<p {...StyledInfo}>Piccolini penne  500 g</p>
-        			<p {...StyledInfo} {...StyledStuk} >€ 2,04/st</p>
-        			<p {...StyledInfo} >€ 4,08/kg</p>
+        			<h2 {...StyledTitle}>{this.props.name}</h2>
+        			<p {...StyledInfo}>{this.props.description}</p>
+        			<p {...StyledInfo} {...StyledStuk} >€ {this.props.price}</p>
+        			<p {...StyledInfo} >€ {this.props.price_per_kg}</p>
         		</div>
         		<div {...StyledUnderLeft}>
 					
-						<AddCount/>
+						<AddCount status={this.state.Count }add={this.countUp.bind(this)} min={this.countDown.bind(this)} />
 			
         		</div>
-        		<div {...StyledUnderRight}> <button {...StyledButton}>Voeg toe</button> </div>
+        		<div {...StyledUnderRight} onClick={this.handelAdd.bind(this)}> <button {...StyledButton}>Voeg toe</button> </div>
             </div>
         )
     }
