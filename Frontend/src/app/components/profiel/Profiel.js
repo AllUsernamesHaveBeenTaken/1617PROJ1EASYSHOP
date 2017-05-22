@@ -32,7 +32,7 @@ export class Profiel extends React.Component {
        axios.defaults.withCredentials = true;
         axios.get('http://api.easy-shop.xyz/users/'+ localStorage.getItem('id') +'?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
               this.setState({
-                userName:response.data.firstname + ' ' +  response.data.firstname,
+                userName:response.data.firstname + ' ' +  response.data.lastname,
                 credentials_id: response.data.credentials_id,
                 userImg: response.data.imageName
               })
