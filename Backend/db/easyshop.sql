@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: easyshop
 -- ------------------------------------------------------
--- Server version	5.7.18-0ubuntu0.16.04.1
+-- Server version	5.7.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +31,7 @@ CREATE TABLE `addresses` (
   PRIMARY KEY (`id`),
   KEY `fk_addresses_users_idx` (`users_id`),
   CONSTRAINT `fk_addresses_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `credentials` (
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `deliveries` (
   KEY `fk_deliveries_orders1_idx` (`orders_id`),
   CONSTRAINT `fk_deliveries_orders1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_deliveries_users1` FOREIGN KEY (`deliverer_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +160,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `fk_orders_addresses1` FOREIGN KEY (`addresses_id`) REFERENCES `addresses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_addresses2` FOREIGN KEY (`applicant_id`) REFERENCES `addresses` (`users_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_shops1` FOREIGN KEY (`shops_id`) REFERENCES `shops` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +184,6 @@ CREATE TABLE `orders_has_products` (
   `orders_id` int(11) NOT NULL,
   `products_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
-  PRIMARY KEY (`orders_id`),
   KEY `fk_orders_has_products_products1_idx` (`products_id`),
   KEY `fk_orders_has_products_orders1_idx` (`orders_id`),
   CONSTRAINT `fk_orders_has_products_orders1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -222,7 +221,7 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`),
   KEY `fk_products_shops1_idx` (`shops_id`),
   CONSTRAINT `fk_products_shops1` FOREIGN KEY (`shops_id`) REFERENCES `shops` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +249,7 @@ CREATE TABLE `reviews` (
   PRIMARY KEY (`id`),
   KEY `fk_reviews_deliveries1_idx` (`deliveries_id`),
   CONSTRAINT `fk_reviews_deliveries1` FOREIGN KEY (`deliveries_id`) REFERENCES `deliveries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -287,7 +286,7 @@ CREATE TABLE `shops` (
   KEY `fk_shops_types1_idx` (`types_id`),
   CONSTRAINT `fk_shops_credentials1` FOREIGN KEY (`credentials_id`) REFERENCES `credentials` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_shops_types1` FOREIGN KEY (`types_id`) REFERENCES `types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,6 +355,10 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'04 05 98 66 84','Mari','Shelton',0,77,1,1,'blank'),(2,'01 74 51 01 29','Chelsea','Rush',1,49,0,2,'blank'),(3,'08 52 52 16 60','Amela','Mercado',1,22,0,4,'blank'),(4,'01 30 83 03 21','McKenzie','Osborn',0,43,1,4,'blank'),(5,'02 42 44 29 33','Isadora','Sykes',0,61,1,4,'blank'),(6,'02 83 41 45 81','Tad','Schneider',1,32,1,4,'blank'),(7,'04 28 75 52 75','Yoko','Butler',1,66,0,4,'blank'),(8,'03 65 12 64 07','Wendy','Salazar',0,66,1,4,'blank'),(9,'01 35 22 91 85','Wallace','Morse',0,75,0,4,'blank'),(10,'05 81 17 63 07','Stephen','Mercer',0,66,0,4,'blank'),(11,'01 90 69 87 06','Eleanor','Perkins',1,43,1,4,'blank'),(12,'04 43 57 42 07','Cailin','Norton',1,52,0,4,'blank'),(13,'09 86 52 02 96','Raphael','Nicholson',1,60,0,4,'blank'),(14,'01 45 21 35 18','Neve','Jordan',0,41,1,4,'blank'),(15,'07 35 72 85 30','Alexa','Massey',0,19,0,4,'blank'),(16,'07 25 01 95 47','Mollie','Cobb',1,77,0,4,'blank'),(17,'01 70 63 51 72','September','Chandler',1,60,1,4,'blank'),(18,'01 42 82 17 51','Jermaine','Mejia',1,36,1,4,'blank'),(19,'01 47 05 04 21','Martha','Frost',1,75,0,4,'blank'),(20,'03 02 86 40 79','Basia','Mccarty',1,77,0,4,'blank'),(21,'03 49 15 79 90','Jerome','Valencia',1,40,0,4,'blank'),(22,'09 20 17 47 78','Eaton','Fry',0,55,0,4,'blank'),(23,'09 43 58 08 57','Jason','Galloway',1,29,0,4,'blank'),(24,'08 57 04 62 93','Graiden','Holt',0,80,0,4,'blank'),(25,'03 50 01 00 13','Joshua','West',0,56,1,4,'blank'),(26,'03 31 77 54 26','Allegra','Kinney',0,61,1,4,'blank'),(27,'06 44 41 62 16','Alfreda','Ochoa',1,63,1,4,'blank'),(28,'03 53 42 31 00','Bevis','Freeman',0,32,0,4,'blank'),(29,'06 12 53 18 52','Uta','Atkinson',1,67,0,4,'blank'),(30,'08 92 12 29 62','Abraham','Townsend',0,42,0,4,'blank'),(31,'09 38 18 25 79','Hoyt','Tate',1,36,1,4,'blank'),(32,'03 75 10 32 52','Whilemina','Ortega',0,57,1,4,'blank'),(33,'08 24 81 37 52','Walker','Hendrix',0,19,1,4,'blank'),(34,'05 46 62 21 67','Wendy','Townsend',1,54,0,4,'blank'),(35,'02 24 04 69 05','Vanna','Christian',0,41,1,4,'blank'),(36,'02 38 56 57 37','Cassady','Reilly',1,18,1,4,'blank'),(37,'02 45 16 89 23','Josephine','Merrill',1,19,1,4,'blank'),(38,'06 94 62 20 82','Angela','Baxter',0,67,0,4,'blank'),(39,'08 42 29 53 65','Margaret','Wheeler',0,25,0,4,'blank'),(40,'03 77 64 52 03','Robin','Strickland',0,21,1,4,'blank'),(41,'06 71 48 43 19','Jorden','Figueroa',0,60,1,4,'blank'),(42,'01 64 33 14 66','Clark','Lambert',0,63,1,4,'blank'),(43,'04 60 86 41 93','Cameron','Compton',1,72,1,4,'blank'),(44,'08 48 45 39 35','Maris','Hester',0,70,1,4,'blank'),(45,'02 24 75 14 44','Barrett','Gordon',0,22,1,4,'blank'),(46,'09 66 42 07 16','Porter','Gordon',1,76,1,4,'blank'),(47,'03 73 89 94 45','Laurel','Mcbride',0,22,0,4,'blank'),(48,'01 27 42 10 72','Inga','Holman',0,22,0,4,'blank'),(49,'06 01 58 96 65','Raya','Moss',0,70,1,4,'blank'),(50,'03 24 25 13 62','Daryl','Tillman',1,41,1,4,'blank'),(51,'01 35 48 79 87','Gloria','Sutton',0,62,0,4,'blank'),(52,'04 12 38 72 37','Jeanette','Medina',0,75,1,4,'blank'),(53,'04 36 23 24 93','Eric','Duffy',1,43,0,4,'blank'),(54,'08 16 86 29 74','Stacey','Greer',0,48,1,4,'blank'),(55,'05 43 88 91 74','Hiram','Clemons',0,56,1,4,'blank'),(56,'07 35 86 22 41','Uta','Parks',0,68,0,4,'blank'),(57,'05 37 24 24 93','Clarke','Bailey',1,41,0,4,'blank'),(58,'06 22 22 34 78','Gail','Briggs',0,26,0,4,'blank'),(59,'04 92 42 32 08','Sandra','Gilliam',0,79,0,4,'blank'),(60,'02 49 17 79 99','Inga','Osborn',0,74,0,4,'blank'),(61,'08 67 81 72 75','Martha','Dickson',0,50,1,4,'blank'),(62,'04 41 75 75 61','Kelsey','Mercer',0,37,1,4,'blank'),(63,'02 27 25 35 42','Eden','Dickerson',0,48,0,4,'blank'),(64,'07 17 59 18 49','Dakota','Schroeder',1,55,0,4,'blank'),(65,'05 44 27 75 07','Tanisha','Bray',0,74,0,4,'blank'),(66,'01 03 18 82 25','Erin','Fox',1,42,1,4,'blank'),(67,'05 26 63 09 23','Rosalyn','Emerson',1,42,1,4,'blank'),(68,'03 60 18 33 17','Kristen','Mason',0,78,1,4,'blank'),(69,'06 90 00 63 32','Bernard','Tucker',1,68,1,4,'blank'),(70,'05 62 01 52 04','Noah','Vinson',1,75,1,4,'blank'),(71,'08 31 74 33 87','Zachery','Jefferson',0,66,0,4,'blank'),(72,'08 95 90 09 11','Bevis','Gordon',1,56,0,4,'blank'),(73,'01 33 69 48 13','Laura','Powell',1,67,1,4,'blank'),(74,'02 12 21 81 58','Wing','Beasley',1,76,1,4,'blank'),(75,'01 91 82 45 86','Stephanie','Phillips',1,24,1,4,'blank'),(76,'05 32 17 70 76','Abigail','Robinson',1,44,0,4,'blank'),(77,'02 15 28 79 05','Jocelyn','Howard',0,60,1,4,'blank'),(78,'07 18 02 03 56','Freya','Haney',1,25,0,4,'blank'),(79,'03 81 49 41 52','Sarah','Edwards',0,69,0,4,'blank'),(80,'07 08 17 04 87','Buffy','Snow',1,77,0,4,'blank'),(81,'09 78 13 77 59','Beverly','Melton',0,28,0,4,'blank'),(82,'06 59 42 58 27','Nora','Salazar',1,27,1,4,'blank'),(83,'08 08 90 99 70','Ahmed','Benton',1,55,0,4,'blank'),(84,'06 84 41 44 74','Lydia','Poole',0,33,0,4,'blank'),(85,'02 85 79 17 89','Felicia','Mcguire',0,39,0,4,'blank'),(86,'03 93 68 47 83','Dieter','Mason',1,28,1,4,'blank'),(87,'09 90 66 53 18','Trevor','Russo',1,35,0,4,'blank'),(88,'03 50 35 03 92','Karly','Peck',1,56,1,4,'blank'),(89,'05 83 11 89 67','Thane','Barry',1,49,1,4,'blank'),(90,'05 36 67 94 73','Heidi','Lara',0,79,1,4,'blank'),(91,'01 16 07 18 52','Kelly','Hewitt',1,70,0,4,'blank'),(92,'07 49 48 43 92','Arsenio','Lara',1,33,0,4,'blank'),(93,'04 48 59 24 77','Risa','Hines',0,43,1,4,'blank'),(94,'09 69 12 59 62','Vladimir','Blackburn',1,25,0,4,'blank'),(95,'09 54 93 37 31','Justin','Delaney',1,47,1,4,'blank'),(96,'04 29 87 52 48','Kellie','Howe',0,35,1,4,'blank'),(97,'02 97 23 75 30','Eagan','Saunders',0,76,0,4,'blank'),(98,'04 15 65 42 95','Jenette','Strickland',0,68,0,4,'blank'),(99,'04 68 55 18 11','Bertha','Wilcox',0,18,1,4,'blank'),(100,'03 38 46 86 16','Jarrod','Foreman',0,54,0,4,'blank');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'easyshop'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -366,4 +369,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-18 22:31:23
+-- Dump completed on 2017-06-06 16:19:35
