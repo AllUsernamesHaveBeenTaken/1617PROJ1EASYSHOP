@@ -101,7 +101,7 @@ export class ProductInfo extends React.Component {
 		//check winkelmand bestaat
 		var arg = this
 		if (localStorage.getItem("winkelmandje") === null) {
-
+			console.log("maak nieuw winkelmandje")
   			var winkelmandje =[{WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: this.state.Count}]},]
   			localStorage.setItem('winkelmandje',JSON.stringify(winkelmandje));
 			// console.log(JSON.parse(localStorage.getItem('winkelmandje'))[0]);
@@ -110,40 +110,49 @@ export class ProductInfo extends React.Component {
 		else{
 			var boodschappen=JSON.parse(localStorage.getItem('winkelmandje'))
 			var boodschappen_copy= boodschappen;
+			console.log('boodschappen 1')
+			console.log(boodschappen)
 			for (var i = 0; i <= boodschappen.length - 1; i++) {
-				
+				console.log('boodschappen 2')
+				console.log(boodschappen)
 				//check winkel id bestaat 
 		
 				//if true
 				if (boodschappen[i]['WinkelId']== arg.props.shopId) {
 				
 					var notFound = true;
-				
+					console.log('winkelID')
+					console.log(boodschappen[i]['WinkelId'])
 					for (var x = 0; x <= boodschappen[i]['Boodschappen'].length - 1; x++) {
-							
+						console.log(boodschappen[i]['Boodschappen'][x]['ProductId']	)
 						if (boodschappen[i]['Boodschappen'][x]['ProductId'] == arg.props.productId) {
 							boodschappen_copy[i]['Boodschappen'][x]['Count']=this.state.Count;
-						
+							console.log("update winkelmandje")
 							notFound= false;
 					
 						}
 					}
 					if (notFound) {
+						console.log("add to winkelmandje")
 						boodschappen_copy[i]['Boodschappen'].push({ProductId: arg.props.productId,Count: this.state.Count})
 					}
+					localStorage.setItem('winkelmandje',JSON.stringify(boodschappen_copy));
+					 return;
 					
 					
 
 
 				} 
-				//if false
-				else  {
+				
+				
 					
-					boodschappen_copy.push({WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: this.state.Count}]})
   					
-				}
-				localStorage.setItem('winkelmandje',JSON.stringify(boodschappen_copy));
+				
+				
 			}
+			console.log('add new shop')
+			boodschappen_copy.push({WinkelId:this.props.shopId,Boodschappen: [{ProductId: arg.props.productId,Count: this.state.Count}]})
+			localStorage.setItem('winkelmandje',JSON.stringify(boodschappen_copy));
 			
 		
 		}
