@@ -16,6 +16,8 @@ import { Landing } from "./components/landing/Landing"
 import { Winkels } from "./components/winkels/Winkels"
 import {  Boodschappen } from "./components/boodschappen/Boodschappen"
 import {  BoodschappenDetail } from "./components/boodschappen/BoodschappenDetail"
+import {  BoodschappenDetailProfiel } from "./components/profiel/BoodschapDetail"
+
 import {  Profiel } from "./components/profiel/Profiel"
 import {  WinkelMandje } from "./components/winkelmandje/WinkelMandje"
 import {  Producten } from "./components/products/Producten"
@@ -69,8 +71,6 @@ class App extends React.Component {
         if (parts.length == 2) return parts.pop().split(";").shift();
     }
     render() {
-        
-        console.log()
   
       
         if (this.state.loginFlag== 'true') {
@@ -81,7 +81,11 @@ class App extends React.Component {
                         
                         
                        <Route path="/welcome" component={Landing} />
+
                         <Route exact path="/" component={Profiel} />
+                        <Route path="/profile/order/:orderId" component={BoodschappenDetailProfiel} />
+
+
                         <Route path="/winkels" component={Winkels} />
                         <Route path="/boodschappen/overzicht" component={Boodschappen} />
                         <Route path="/boodschappen/order/:orderId" component={BoodschappenDetail} />
