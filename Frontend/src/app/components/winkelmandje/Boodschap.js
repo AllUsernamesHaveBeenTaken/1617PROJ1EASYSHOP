@@ -117,8 +117,19 @@ export class Boodschap extends React.Component {
                     console.log(response)
                     var array= JSON.parse(localStorage.getItem('winkelmandje'));
                      array.forEach(function(a,y) { 
-                        
-                        if (a.WinkelId== this.props.shopId) {
+                        if (array[y].Boodschappen.length == 1) {
+                            array.splice(y, 1)
+                             localStorage.setItem('winkelmandje',JSON.stringify(array));
+                             if(array.length == 0){
+                                localStorage.removeItem("winkelmandje");
+                                  this.hide()
+                                  return
+                             }
+                              this.hide()
+                                    
+
+                        }
+                        else if (a.WinkelId== this.props.shopId) {
                             console.log(a.Boodschappen)
                              array.splice(y, 1)
                               localStorage.setItem('winkelmandje',JSON.stringify(array));
