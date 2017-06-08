@@ -54,7 +54,7 @@ export class Boodschap extends React.Component {
       
         this.state = {
             
-        
+            show:true
         }
     }
      componentDidMount(a) {
@@ -65,14 +65,14 @@ export class Boodschap extends React.Component {
     placeOrder(){
          axios.defaults.withCredentials = true;
         axios.get('http://api.easy-shop.xyz/addresses?csrf='+ localStorage.getItem('jwtToken')+'&filter=users_id,eq,'+localStorage.getItem('id') ).then((response) => {
-            var d = new Date();     
+            var d = new Date(); 
             axios({
               method: 'post',
               url: 'http://api.easy-shop.xyz/orders?csrf='+ localStorage.getItem('jwtToken') ,
               data: {
-                creationDate: new Date().getDay()+'-'+new Date().getMonth()+1+'-'+new Date().getFullYear()+ ' '+new Date().getHours()+ ':'+new Date().getMinutes()+':'+new Date().getSeconds(),
+                creationDate: d,
                 available:1,
-                expiryDate: new Date().getDay()+'-'+new Date().getMonth()+1+'-'+new Date().getFullYear()+ ' '+new Date().getHours()+ ':'+new Date().getMinutes()+':'+new Date().getSeconds(),
+                expiryDate: d,
                 paid:0,
                 addresses_id: response.data.addresses.records[0][0],
                 applicant_id: localStorage.getItem('id'),
@@ -83,19 +83,28 @@ export class Boodschap extends React.Component {
                             
                 console.log(response)
                 console.log(  this.props.products)
+
                 var data= [];
-                this.props.products.forEach(function(element,i) { 
-                
-                    data.push({
-                        orders_id: response.data,
-                        products_id: element.prId,
-                        amount: element.prCount
-                    })
+                 var array= JSON.parse(localStorage.getItem('winkelmandje'));
+                 array.forEach(function(a,y) { 
+                    
+                    if (a.WinkelId== this.props.shopId) {
+                        console.log(a.Boodschappen)
+                        a.Boodschappen.forEach(function(element,i) { 
+                    
+                        data.push({
+                            orders_id: response.data,
+                            products_id: element.ProductId,
+                            amount: element.Count
+                        })
 
 
 
 
-                });
+                    });
+                    }
+                    
+                }.bind(this))
                 console.log(data)
 
                      axios({
@@ -105,7 +114,19 @@ export class Boodschap extends React.Component {
                     
                         }).then((response) => {
                                 
-                    console.log(response)})
+                    console.log(response)
+                    var array= JSON.parse(localStorage.getItem('winkelmandje'));
+                     array.forEach(function(a,y) { 
+                        
+                        if (a.WinkelId== this.props.shopId) {
+                            console.log(a.Boodschappen)
+                             array.splice(y, 1)
+                              localStorage.setItem('winkelmandje',JSON.stringify(array));
+                        }
+                        
+                    }.bind(this))
+                    this.hide()
+                })
                         .catch((error) => {console.log(error)});
                         
 
@@ -122,10 +143,17 @@ export class Boodschap extends React.Component {
             })
         .catch((error) => {});
     }
+    hide(){
+        this.setState({ show: false})
+    }
+   
     render() {
    
         return (
             <div> 
+                 {
+                      this.state.show ?
+
                 <div {...StyledContainer}className='clearfix'>
                     <h2 {...title}>{this.props.shopName}</h2>
                    
@@ -136,9 +164,9 @@ export class Boodschap extends React.Component {
 
                            
                                this.props.products.map(function(link,i) {
-                                    return  <BoodschapProduct key={link['prId']} prName={link['prName']} prCount={link['prCount']}prImg={link['prImg']} />
+                                    return  <BoodschapProduct key={link['prId']} hide={this.hide.bind(this)}prId={link['prId']} shopId={this.props.shopId} prName={link['prName']} prCount={link['prCount']}prImg={link['prImg']} />
             
-                                })
+                                }.bind(this))
                             
                             
                         
@@ -155,7 +183,9 @@ export class Boodschap extends React.Component {
                     </div>
                     
                 </div>
-                
+                :
+                <div></div>
+                }
             </div>
         )
     }

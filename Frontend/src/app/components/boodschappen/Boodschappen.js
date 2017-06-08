@@ -54,7 +54,7 @@ export class Boodschappen extends React.Component {
         var orderInfo = Array();
 
         axios.defaults.withCredentials = true;
-        axios.get('http://api.easy-shop.xyz/orders?csrf='+ localStorage.getItem('jwtToken') )
+        axios.get('http://api.easy-shop.xyz/orders?order[]=id,desc&csrf='+ localStorage.getItem('jwtToken') )
             .then((response) => {
             response.data.orders.records.forEach(function(e){
                 orderInfo.push({orderId: e[0], completed: e[2], available: e[3], shopId:e[8], shopName:null, shopAddress:null, dateAdded: e[1]})

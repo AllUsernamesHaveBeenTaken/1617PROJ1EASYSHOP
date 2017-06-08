@@ -75,17 +75,18 @@ export class BoodschappenDetail extends React.Component{
                 })
                 .then((response) => {
                     console.log(response);
-
-                });
-                axios({
+                    axios({
                     method: 'put',
                     url: 'http://api.easy-shop.xyz/orders/'+this.props.match.params.orderId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter=id,eq,'+this.props.match.params.orderId ,
                     data: {
                         available: '0'
                     },
-                    header: {'x-www-form-urlencoded':'rfc1738'}
-                })
+                    
+                    }).then((response => {window.location = "/boodschappen/overzicht";}))
                     .catch((error) => {console.log(error)});
+
+                });
+                
             })
                 .catch((error) => {});
         }))
