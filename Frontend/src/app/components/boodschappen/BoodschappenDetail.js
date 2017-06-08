@@ -30,37 +30,25 @@ export class BoodschappenDetail extends React.Component{
             orderId: this.props.match.params.orderId,
             productId: '',
             amount: '',
-            productsFound: null,
-            productInfo: []
+            productsFound: false,
+            products: []
         }
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     componentDidMount() {
         axios.defaults.withCredentials = true;
-        axios.get('http://api.easy-shop.xyz/api.php/orders_has_products/'+this.state.orderId+'?csrf='+ localStorage.getItem('jwtToken')).then((response) => {
-
-            this.setState({
-
-                productId: response.data.products_id,
-                amount: response.data.amount,
-                productsFound: true,
-
-            });
-            axios.get('http://api.easy-shop.xyz/api.php/products/'+this.state.productId+'?csrf='+ localStorage.getItem('jwtToken')+'&filter=id,eq,'+this.state.productId).then((response) => {
-                this.setState({
-                    productInfo: response.data
-                })
-
-            })
-                .catch(function (error) {
-                    console.log(error);
-                });
+        axios.get('http://api.easy-shop.xyz/api.php/orders_has_products?filter=orders_id,eq,'+this.state.orderId+'&csrf='+ localStorage.getItem('jwtToken')).then((response) => {
+            console.log(response)
+       
+            this.setState({productsFound:true});
+            this.setState({products:response.data.orders_has_products.records});
+            console.log(this.state.products)
 
         })
-            .catch(function (error) {
-                console.log(error);
-            });
+        .catch(function (error) {
+            console.log(error);
+        });
     };
 
     doDelivery() {
@@ -83,9 +71,10 @@ export class BoodschappenDetail extends React.Component{
                         applicant_id: orderJSON['applicant_id'],
                         orders_shops_id: orderJSON['shops_id']
                     },
-                    header: {'x-www-form-urlencoded':'rfc1738'}
+                   
                 })
-                    .then((response) => {
+                .then((response) => {
+                    console.log(response);
 
                 });
                 axios({
@@ -108,14 +97,22 @@ export class BoodschappenDetail extends React.Component{
             <div>
                 <Header/>
                 <section className="wrapper">
-                    <div>
-                        <ShopTitle/>
-                        <ShopHours/>
-                    </div>
-                        <h2>
-                            <BoodschapProduct key={this.state.productInfo['id']} prName={this.state.productInfo['name']} prCount={this.state.amount}prImg={this.state.productInfo['imageName']} />
-                        </h2>
-                    <a  {...StyledDelete} onClick={this.doDelivery.bind(this)}>I'll deliver!</a>
+                   
+                        {
+                            this.state.productsFound ?
+                                this.state.products.map(function(link,i) {
+                                    return  <BoodschapProduct key={i} amount={link[2]} prId={link[1]} />
+           
+                                })
+                            :
+                            <p>no products ound</p>
+                           
+                       
+ 
+                       }
+                       
+         
+                    <a  {...StyledDelete} href='#' onClick={this.doDelivery.bind(this)}>I'll deliver!</a>
                 </section>
 
             </div>
