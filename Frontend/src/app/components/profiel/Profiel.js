@@ -25,7 +25,8 @@ export class Profiel extends React.Component {
             useradress:'',
             credentials_id:null,
             userImg:'',
-            placed: []
+            placed: [],
+            accepted: []
 
         }
     }
@@ -52,8 +53,10 @@ export class Profiel extends React.Component {
 
                     axios.get('http://api.easy-shop.xyz/orders/?filter=applicant_id,eq,'+ localStorage.getItem('id') +'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
                         this.setState({placed: response.data.orders.records});
-                        console.log(this.state.placed);
+                        axios.get('http://api.easy-shop.xyz/deliveries/?filter=deliverer_id,eq,'+ localStorage.getItem('id') +'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+                            this.setState({accepted: response.data.deliveries.records});
 
+                        }).catch((error) => {console.log(error)});
 
                     }).catch((error) => {console.log(error)});
                 })
@@ -68,9 +71,7 @@ export class Profiel extends React.Component {
     componentDidMount(){
 
     }
-    doPayment(){
 
-    }
     render() {
         return (
             <div>
@@ -82,11 +83,18 @@ export class Profiel extends React.Component {
                     {
                         this.state.placed ?
                             this.state.placed.map(function(link){
-                                return <Boodschap key={link[0]} id={link[0]}  expDate={link[4]} startDate={link[1]} status={link[3]} shopId={link[8]}/>
+                                return <Boodschap key={link[0]} id={link[0]}  expDate={link[4]} startDate={link[1]} status={link[3]} shopId={link[8]} what="order"/>
                             })
-                            : ''
+                            : 'No groceries found.'
                     }
-                    <Boodschap/>
+                    <Title title='Bezorgingen'/>
+                    {
+                        this.state.placed ?
+                            this.state.accepted.map(function(link){
+                                return <Boodschap key={link[0]} id={link[0]} Date={link[1]} shopId={link[6]} what="delivery"/>
+                            })
+                            : 'No groceries found.'
+                    }
                 </div>
             </div>
         )

@@ -54,50 +54,81 @@ export class Boodschap extends React.Component {
         super(props);
 
         this.state = {
+            isHidden: true
         }
+         this.toggleShow = this.toggleShow.bind(this);
 
     }
 
-    componentWillMount() {
-        /*axios.get('http://api.easy-shop.xyz/orders/?filter=applicant_id,eq,'+ localStorage.getItem('id') +'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
-            console.log(response);
-            var shopString='';
-            var basciString='filter[]=id,eq,';
-            for (var i = 0; i <= response.data.orders.records.length - 1; i++) {
-                if (i  != 0) {
-                    shopString = shopString +'&'
-                }
-                shopString = shopString + basciString + response.data.orders.records[i][6]
-            }
-            axios.get('http://api.easy-shop.xyz/shops/?filter=id,eq,'+ shopString +'&satisfy=any&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
-                console.log(response)
-            }).catch((error) => {console.log(error)});
-        }).catch((error) => {console.log(error)});*/
-    }
+    toggleShow() {
+         this.state.isHidden ?
+             this.setState({isHidden: false}) :
+             this.setState({isHidden: true});
+    };
+
 
     render() {
         return (
             <div>
                 <div className='clearfix'>
-                    <div {...StyledContainer}>
-                        <div {...StyledLeft}>
-                            <h3>Winkel name <span>Date: {this.props.expDate}</span></h3>
-                            <p>Exp date: {this.props.expDate}</p>
-                            <p>Status: <span>{this.props.status == 0 ? 'Order taken' : 'Order in wait'}</span></p>
-                        </div>
-                        <div {...StyledRight} className='clearfix'>
-                            <div {...buttonContainer}>
-                                   <Link  {...StyledOrder} to={"/profile/order/"+ this.props.id}>View order</Link>
-                            </div>
-                            <div {...buttonContainer}>
-                                 <a  {...StyledPay}href='#'>Pay</a>
-                            </div>
+                    {
+                        this.props.what == 'order' ?
+                            <div {...StyledContainer}>
 
-                        </div>
-                        <div {...StyledDetaileContainer}>
-                        </div>
+                                <div {...StyledLeft}>
+                                    <h3>Winkel name <span>Date: {this.props.expDate}</span></h3>
+                                    <p>Exp date: {this.props.expDate}</p>
+                                    <p>Status: <span>{this.props.status == 0 ? 'Order taken' : 'Order in wait'}</span></p>
+                                </div>
+                                <div {...StyledRight} className='clearfix'>
+                                    <div {...buttonContainer}>
+                                        <a  {...StyledOrder} onClick={this.toggleShow}>
+                                            {
+                                                this.state.isHidden == true ? 'View order': 'Hide order'
+                                            }
+                                        </a>
+                                    </div>
+                                    <div {...buttonContainer}>
+                                        <a  {...StyledPay} href='#'>Pay</a>
+                                    </div>
 
-                    </div>
+                                </div>
+                                <div {...StyledDetaileContainer}>
+                                </div>
+                                {
+                                    this.state.isHidden == true ? '': <BoodschapDetail id={this.props.id} />
+                                }
+
+                            </div>
+                            :
+                            <div {...StyledContainer}>
+
+                                <div {...StyledLeft}>
+                                    <h3>Winkel name </h3>
+                                    <p>Exp date: {this.props.Date}</p>
+                                </div>
+                                <div {...StyledRight} className='clearfix'>
+                                    <div {...buttonContainer}>
+                                        <a  {...StyledOrder} onClick={this.toggleShow}>
+                                            {
+                                                this.state.isHidden == true ? 'View order': 'Hide order'
+                                            }
+                                        </a>
+                                    </div>
+                                    <div {...buttonContainer}>
+                                        <a  {...StyledPay} href='#'>Delivered</a>
+                                    </div>
+
+                                </div>
+                                <div {...StyledDetaileContainer}>
+                                </div>
+                                {
+                                    this.state.isHidden == true ? '': <BoodschapDetail id={this.props.id} />
+                                }
+
+                            </div>
+                    }
+
                 </div>
 
 
