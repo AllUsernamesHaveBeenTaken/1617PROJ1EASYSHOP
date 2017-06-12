@@ -76,7 +76,7 @@ export class Boodschap extends React.Component {
                             <div {...StyledContainer}>
 
                                 <div {...StyledLeft}>
-                                    <h3>Winkel name <span>Date: {this.props.expDate}</span></h3>
+                                    <h3>Winkel name<span>Date: {this.props.expDate}</span></h3>
                                     <p>Exp date: {this.props.expDate}</p>
                                     <p>Status: <span>{this.props.status == 0 ? 'Order taken' : 'Order in wait'}</span></p>
                                 </div>
@@ -89,7 +89,7 @@ export class Boodschap extends React.Component {
                                         </a>
                                     </div>
                                     <div {...buttonContainer}>
-                                        <a  {...StyledPay} href='#'>Pay</a>
+                                        <a  {...StyledPay} href='http://payment.easy-shop.xyz/payment.php?amount=25'>Pay</a>
                                     </div>
 
                                 </div>
