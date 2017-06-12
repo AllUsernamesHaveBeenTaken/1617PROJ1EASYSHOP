@@ -21,7 +21,11 @@ var config = {
                 }
             }
         ]
-    }
+    },
+	devServer: {
+  		disableHostCheck: true
+
+	}		
 };
 
 module.exports = config;
