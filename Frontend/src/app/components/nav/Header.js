@@ -105,12 +105,12 @@ export default class Header extends React.Component {
     this.state.ShowSideNav = false
   }
   logout(){
-      console.log('daan');
       event.preventDefault();
       localStorage.setItem('jwtToken', '');
       document.cookie = "XSRF-TOKEN=''; path=/";
       document.cookie = "user=''; path=/";
       document.cookie = "loginFlag=false; path=/";
+      localStorage.removeItem("winkelmandje");
       window.location.assign('/')
   }
   render() {
