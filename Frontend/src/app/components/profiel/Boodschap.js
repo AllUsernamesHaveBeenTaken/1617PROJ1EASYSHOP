@@ -54,7 +54,8 @@ export class Boodschap extends React.Component {
         super(props);
 
         this.state = {
-            isHidden: true
+            isHidden: true,
+            price: 0
         }
          this.toggleShow = this.toggleShow.bind(this);
 
@@ -65,9 +66,40 @@ export class Boodschap extends React.Component {
              this.setState({isHidden: false}) :
              this.setState({isHidden: true});
     };
+    
+    componentDidMount(){
+        axios.defaults.withCredentials = true;
+        axios.get('http://api.easy-shop.xyz/orders_has_products?filter=orders_id,eq,'+ this.props.id +'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+            var price = 0;
+            console.log(response)
+             response.data.orders_has_products.records.forEach(function(e){
+                console.log(e)
+                axios.get('http://api.easy-shop.xyz/products/'+ e[1]+'?csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
+                    console.log(response.data.price*e[2])
+                    price = price + response.data.price*e[2]
+                    this.setState({ price: price})
+                    console.log('prijs');
+                    console.log(this.state.price)
 
+                })
+            }.bind(this));
 
-    render() {
+        })
+        .catch((error) => {console.log(error)});
+
+    }
+    pay(){
+         axios({
+                    method: 'put',
+                    url: 'http://api.easy-shop.xyz/orders/'+this.props.id+'?csrf='+ localStorage.getItem('jwtToken') ,
+                    data: {
+                        paid: '1'
+                    },
+                    
+                    }).then((response) => {window.location = 'http://payment.easy-shop.xyz/payment.php?amount='+this.state.price})
+                    .catch((error) => {console.log(error)});
+}
+   render() {
         return (
             <div>
                 <div className='clearfix'>
@@ -89,7 +121,7 @@ export class Boodschap extends React.Component {
                                         </a>
                                     </div>
                                     <div {...buttonContainer}>
-                                        <a  {...StyledPay} href='http://payment.easy-shop.xyz/payment.php?amount=25'>Pay</a>
+                                        {this.props.paid == 0 ? <a  {...StyledPay} onClick={this.pay.bind(this)} href='#'>Pay</a> : ''}
                                     </div>
 
                                 </div>

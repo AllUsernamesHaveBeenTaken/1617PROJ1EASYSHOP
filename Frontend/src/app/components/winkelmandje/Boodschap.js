@@ -116,7 +116,8 @@ export class Boodschap extends React.Component {
                                 
                     console.log(response)
                     var array= JSON.parse(localStorage.getItem('winkelmandje'));
-                     array.forEach(function(a,y) { 
+                     array.forEach(function(a,y) {
+                        console.log(array) 
                         if (array[y].Boodschappen.length == 1) {
                             array.splice(y, 1)
                              localStorage.setItem('winkelmandje',JSON.stringify(array));

@@ -53,6 +53,7 @@ export class Profiel extends React.Component {
 
                     axios.get('http://api.easy-shop.xyz/orders/?filter=applicant_id,eq,'+ localStorage.getItem('id') +'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
                         this.setState({placed: response.data.orders.records});
+                        
                         axios.get('http://api.easy-shop.xyz/deliveries/?filter=deliverer_id,eq,'+ localStorage.getItem('id') +'&csrf='+ localStorage.getItem('jwtToken') ).then((response) => {
                             this.setState({accepted: response.data.deliveries.records});
 
@@ -83,7 +84,7 @@ export class Profiel extends React.Component {
                     {
                         this.state.placed ?
                             this.state.placed.map(function(link){
-                                return <Boodschap key={link[0]} id={link[0]}  expDate={link[4]} startDate={link[1]} status={link[3]} shopId={link[8]} what="order"/>
+                                return <Boodschap key={link[0]} id={link[0]}  expDate={link[4]} paid={link[5]} startDate={link[1]} status={link[3]} shopId={link[8]} what="order"/>
                             })
                             : 'No groceries found.'
                     }

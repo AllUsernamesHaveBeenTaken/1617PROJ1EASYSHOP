@@ -49,7 +49,7 @@ export class BoodschapProduct extends React.Component {
         axios.defaults.withCredentials = true;
         axios.get('http://api.easy-shop.xyz/api.php/products/'+this.props.prId+'?csrf='+ localStorage.getItem('jwtToken')).then((response) => {
              this.setState({productName:response.data.name,img: response.data.imageName,price: response.data.price});
-
+                                    
             
            
 
